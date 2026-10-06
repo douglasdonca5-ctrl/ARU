@@ -17,7 +17,7 @@
   <link rel="preload" as="font" type="font/woff2" href="fonts/marcellus.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="fonts/hanken.woff2" crossorigin>
   <link rel="preload" as="image" href="img/hero.webp">
-  <link rel="stylesheet" href="css/styles.css?v=4">
+  <link rel="stylesheet" href="css/styles.css?v=5">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"Arulaser","description":"Maquinaria láser profesional para centros estéticos y clínicas.","logo":"img/favicon.svg"}
   </script>
@@ -166,6 +166,7 @@
 
     <!-- ============ PARA CADA CENTRO ============ -->
     <section class="centers" id="centros">
+      <div class="centers__sticky">
       <header class="centers__head">
         <h2 class="display display--ink">Un equipo para<br class="m-only"> cada centro</h2>
         <div class="arrows">
@@ -173,27 +174,29 @@
           <button type="button" class="arrow" data-dir="1" aria-label="Siguiente"><svg viewBox="0 0 40 16"><path d="M0 8h38M31 1l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
         </div>
       </header>
-      <div class="carousel" tabindex="0" aria-label="Tipos de centro">
-        <figure class="ccard ccard--img"><img src="img/uc-depilacion.webp" alt="Esteticista tratando la pierna de una clienta con un láser de diodo" loading="lazy" width="800" height="1000"></figure>
+      <div class="carousel" aria-label="Tipos de centro">
+        <figure class="ccard ccard--img"><img src="img/uc-depilacion.webp" alt="Esteticista tratando la pierna de una clienta con un láser de diodo" decoding="async" width="800" height="1000"></figure>
         <div class="ccard ccard--text">
           <p>Depilación para todos los fototipos en la misma cabina, sin cambiar de equipo entre clientas.</p>
           <div><strong>Centros de depilación</strong><span>Aru Trio · Aru Compact</span></div>
         </div>
-        <figure class="ccard ccard--img"><img src="img/uc-clinica.webp" alt="Doctora conversando con una paciente en una consulta médico-estética" loading="lazy" width="800" height="1000"></figure>
+        <figure class="ccard ccard--img"><img src="img/uc-clinica.webp" alt="Doctora conversando con una paciente en una consulta médico-estética" decoding="async" width="800" height="1000"></figure>
         <div class="ccard ccard--text">
           <p>Resurfacing, manchas y tatuajes con equipos de grado clínico y parámetros que tu equipo médico puede ajustar.</p>
           <div><strong>Clínicas médico-estéticas</strong><span>Aru CO₂ Fraccional · Aru Pico</span></div>
         </div>
-        <figure class="ccard ccard--img"><img src="img/uc-derma.webp" alt="Dermatóloga examinando la piel de un paciente con una lupa iluminada" loading="lazy" width="800" height="1000"></figure>
+        <figure class="ccard ccard--img"><img src="img/uc-derma.webp" alt="Dermatóloga examinando la piel de un paciente con una lupa iluminada" decoding="async" width="800" height="1000"></figure>
         <div class="ccard ccard--text">
           <p>Lesiones pigmentadas y vasculares tratadas con precisión, en una consulta de cualquier tamaño.</p>
           <div><strong>Dermatología</strong><span>Aru Q-Switch · Aru Vascular 980</span></div>
         </div>
-        <figure class="ccard ccard--img"><img src="img/uc-spa.webp" alt="Sala de spa con camilla y un equipo láser de sobremesa" loading="lazy" width="800" height="1000"></figure>
+        <figure class="ccard ccard--img"><img src="img/uc-spa.webp" alt="Sala de spa con camilla y un equipo láser de sobremesa" decoding="async" width="800" height="1000"></figure>
         <div class="ccard ccard--text">
           <p>Equipos de sobremesa que se integran en tu spa y suman servicios sin obras ni cabinas nuevas.</p>
           <div><strong>Spas y wellness</strong><span>Aru Compact · Aru IPL·SHR</span></div>
         </div>
+      </div>
+      <div class="centers__progress" aria-hidden="true"><span></span></div>
       </div>
     </section>
 
@@ -416,6 +419,6 @@
     </div>
   </dialog>
 
-  <script src="js/main.js?v=3" defer></script>
+  <script src="js/main.js?v=4" defer></script>
 </body>
 </html>

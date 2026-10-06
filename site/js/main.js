@@ -205,16 +205,36 @@
     show(0);
   }
 
-  /* ---------- Carrusel ---------- */
-  const car = $('.carousel');
-  const arrows = $$('.arrow');
-  const step = () => { const c = car.querySelector('.ccard'); return c.getBoundingClientRect().width + 16; };
-  arrows.forEach((a) => a.addEventListener('click', () => car.scrollBy({ left: step() * Number(a.dataset.dir), behavior: 'smooth' })));
-  const syncArrows = () => {
-    arrows[0].classList.toggle('is-on', car.scrollLeft > 4);
-    arrows[1].classList.toggle('is-on', car.scrollLeft + car.clientWidth < car.scrollWidth - 4);
-  };
-  car.addEventListener('scroll', syncArrows, { passive: true }); syncArrows();
+  /* ---------- Para cada centro: el scroll vertical desplaza las tarjetas en horizontal ---------- */
+  const centers = $('.centers');
+  if (centers) {
+    const car = $('.carousel', centers), arrows = $$('.arrow', centers), cbar = $('.centers__progress span', centers);
+    let dist = 0, hold = 0, cTick = false;
+    centers.classList.add('is-pinned');
+    const updateCenters = () => {
+      cTick = false;
+      const scrolled = -centers.getBoundingClientRect().top;
+      const p = dist ? Math.min(1, Math.max(0, (scrolled - hold) / dist)) : 0;
+      car.style.transform = `translate3d(${(-p * dist).toFixed(1)}px, 0, 0)`;
+      cbar.style.transform = `scaleX(${p})`;
+      arrows[0].classList.toggle('is-on', p > .01);
+      arrows[1].classList.toggle('is-on', p < .99);
+    };
+    const measureCenters = () => {
+      // recorrido horizontal = lo que sobra de la fila; una pausa breve al entrar y al salir
+      dist = Math.max(0, car.scrollWidth - car.parentElement.clientWidth);
+      hold = innerHeight * .12;
+      centers.style.height = `${Math.round(innerHeight + dist + hold * 2)}px`;
+      updateCenters();
+    };
+    // 1 px de scroll vertical = 1 px de desplazamiento: las flechas avanzan una tarjeta moviendo la página
+    const cardStep = () => car.querySelector('.ccard').getBoundingClientRect().width + parseFloat(getComputedStyle(car).columnGap || '16');
+    arrows.forEach((a) => a.addEventListener('click', () => scrollBy({ top: cardStep() * Number(a.dataset.dir), behavior: reduceMotion ? 'auto' : 'smooth' })));
+    addEventListener('scroll', () => { if (!cTick) { cTick = true; requestAnimationFrame(updateCenters); } }, { passive: true });
+    addEventListener('resize', measureCenters);
+    addEventListener('load', measureCenters);
+    measureCenters();
+  }
 
   /* ---------- Vídeo scroll (secuencia de fotogramas en canvas) ---------- */
   const scrolly = $('.scrolly');
