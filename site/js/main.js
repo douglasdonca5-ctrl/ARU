@@ -115,6 +115,38 @@
   };
   burger.addEventListener('click', () => setMenu(menu.hidden));
   menu.addEventListener('click', (e) => { if (e.target.closest('a, button')) setMenu(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); burger.focus(); } });
+
+  /* ---------- Cabecera: fondo según la sección, se oculta al bajar ---------- */
+  const darkSections = $$('[data-nav="dark"]');
+  const navLinks = $$('.nav__left a[data-sections]').map((a) => ({ a, els: a.dataset.sections.split(',').map((id) => document.getElementById(id)).filter(Boolean) }));
+  let lastY = scrollY, anchorY = scrollY, dir = 0, navTick = false;
+  const updateNav = () => {
+    navTick = false;
+    const y = scrollY, probe = nav.offsetHeight / 2;
+    const atTop = y < 8;
+    const dark = darkSections.some((sec) => { const r = sec.getBoundingClientRect(); return r.top <= probe && r.bottom > probe; });
+    nav.classList.toggle('is-top', atTop);
+    nav.classList.toggle('is-dark', !atTop && dark);
+    nav.classList.toggle('is-light', !atTop && !dark);
+    // dirección acumulada: funciona igual con rueda que con trackpad lento
+    const d = y - lastY;
+    if (d) { const nd = Math.sign(d); if (nd !== dir) { dir = nd; anchorY = lastY; } }
+    if (menu.hidden) {
+      if (y <= 320) nav.classList.remove('is-hidden');
+      else if (dir > 0 && y - anchorY > 48) nav.classList.add('is-hidden');
+      else if (dir < 0 && anchorY - y > 24) nav.classList.remove('is-hidden');
+    }
+    lastY = y;
+    const line = innerHeight * .4;
+    navLinks.forEach(({ a, els }) => {
+      const on = els.some((el) => { const r = el.getBoundingClientRect(); return r.top <= line && r.bottom > line; });
+      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  };
+  addEventListener('scroll', () => { if (!navTick) { navTick = true; requestAnimationFrame(updateNav); } }, { passive: true });
+  addEventListener('resize', updateNav);
+  updateNav();
 
   /* ---------- Privacidad ---------- */
   $$('[data-open-privacy]').forEach((b) => b.addEventListener('click', () => openDialog($('#privacy'))));
@@ -137,6 +169,41 @@
   $$('.lazy-video').forEach((v) => vio.observe(v));
   const hero = $('.hero__media');
   if (reduceMotion && hero) { hero.removeAttribute('autoplay'); hero.pause(); }
+
+  /* ---------- Acompañamiento: un paso y un medio a la vez ---------- */
+  const care = $('.care');
+  if (care) {
+    const items = $$('.care__list li', care), layers = $$('.care__layer', care), count = $('.care__count b', care);
+    const STEP_MS = 7000;
+    let at = 0, visible = false, auto = !reduceMotion, timer = null;
+    const loadVideo = (v) => { const s = v.querySelector('source[data-src]'); if (s) { s.src = s.dataset.src; s.removeAttribute('data-src'); v.load(); } };
+    const syncMedia = () => layers.forEach((l, i) => {
+      const v = l.querySelector('video'); if (!v) return;
+      if (i === at && visible && !reduceMotion) { loadVideo(v); v.play().catch(() => {}); } else v.pause();
+    });
+    const schedule = () => {
+      clearTimeout(timer);
+      care.classList.toggle('is-auto', auto && visible);
+      if (auto && visible) timer = setTimeout(() => show((at + 1) % items.length), STEP_MS);
+    };
+    function show(i) {
+      at = i;
+      items.forEach((li, k) => { li.classList.toggle('is-on', k === i); $('button', li).setAttribute('aria-expanded', String(k === i)); });
+      layers.forEach((l, k) => l.classList.toggle('is-on', k === i));
+      count.textContent = String(i + 1).padStart(2, '0');
+      // reiniciar la barra de progreso del paso activo
+      const bar = $('.care__bar', items[i]); bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
+      syncMedia(); schedule();
+    }
+    care.style.setProperty('--care-t', `${STEP_MS}ms`);
+    items.forEach((li, i) => $('button', li).addEventListener('click', () => { auto = false; show(i); }));
+    // pausa mientras el usuario lee con el ratón o el teclado dentro de la sección
+    const hold = () => { clearTimeout(timer); care.classList.remove('is-auto'); };
+    care.addEventListener('mouseenter', hold); care.addEventListener('focusin', hold);
+    care.addEventListener('mouseleave', schedule);
+    new IntersectionObserver((en) => { visible = en[0].isIntersecting; syncMedia(); schedule(); }, { threshold: .35 }).observe(care);
+    show(0);
+  }
 
   /* ---------- Carrusel ---------- */
   const car = $('.carousel');
@@ -289,6 +356,8 @@
   const send = async (form, status, okMsg) => {
     if (form.dataset.busy) return;
     form.dataset.busy = '1';
+    const btn = $('[type="submit"]', form), label = btn.textContent;
+    btn.setAttribute('aria-busy', 'true'); btn.disabled = true; btn.textContent = 'Enviando…';
     status.className = status.className.replace(/\s?(ok|err)/g, '');
     status.textContent = 'Enviando…';
     try {
@@ -299,24 +368,33 @@
     } catch (err) {
       status.textContent = err.message && err.message !== 'error' && err.message !== 'Failed to fetch' ? err.message : 'No se ha podido enviar. Inténtalo de nuevo en unos minutos.';
       status.classList.add('err');
-    } finally { delete form.dataset.busy; }
+    } finally { delete form.dataset.busy; btn.removeAttribute('aria-busy'); btn.disabled = false; btn.textContent = label; }
   };
 
   const contact = $('#form-contacto');
+  // Mensaje de error debajo de cada campo, anunciado por lectores de pantalla
+  const check = (f) => {
+    const wrap = f.closest('.field, .check');
+    const invalid = f.type === 'checkbox' ? !f.checked : !f.value.trim() || !f.checkValidity();
+    let msg = $('.field__msg', wrap);
+    if (!msg) { msg = document.createElement('small'); msg.className = 'field__msg'; msg.id = `err-${f.name}`; wrap.append(msg); }
+    wrap.classList.toggle('is-bad', invalid);
+    f.setAttribute('aria-invalid', String(invalid));
+    if (invalid) { msg.textContent = f.dataset.msg || 'Revisa este campo.'; f.setAttribute('aria-describedby', msg.id); }
+    else { msg.textContent = ''; f.removeAttribute('aria-describedby'); }
+    return !invalid;
+  };
+  $$('[required]', contact).forEach((f) => {
+    f.addEventListener('blur', () => { if (f.value || f.dataset.touched) check(f); f.dataset.touched = '1'; });
+    f.addEventListener(f.type === 'checkbox' ? 'change' : 'input', () => { if (f.closest('.is-bad')) check(f); });
+  });
   contact.addEventListener('submit', (e) => {
     e.preventDefault();
-    let bad = null;
-    $$('[required]', contact).forEach((f) => {
-      const wrap = f.closest('.field, .check');
-      const invalid = f.type === 'checkbox' ? !f.checked : !f.value.trim() || !f.checkValidity();
-      wrap.classList.toggle('is-bad', invalid);
-      if (invalid && !bad) bad = f;
-    });
+    const bad = $$('[required]', contact).filter((f) => !check(f));
     const st = $('.form__status', contact);
-    if (bad) { st.className = 'form__status err'; st.textContent = 'Revisa los campos marcados.'; bad.focus(); return; }
+    if (bad.length) { st.className = 'form__status err'; st.textContent = bad.length === 1 ? 'Revisa el campo marcado.' : `Revisa los ${bad.length} campos marcados.`; bad[0].focus(); return; }
     send(contact, st, 'Gracias. Hemos recibido tu solicitud y te contactaremos en breve.');
   });
-  contact.addEventListener('input', (e) => e.target.closest('.is-bad')?.classList.remove('is-bad'));
 
   const news = $('.news');
   news.addEventListener('submit', (e) => {

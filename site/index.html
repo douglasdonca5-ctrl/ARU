@@ -17,7 +17,7 @@
   <link rel="preload" as="font" type="font/woff2" href="fonts/marcellus.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="fonts/hanken.woff2" crossorigin>
   <link rel="preload" as="image" href="img/hero.webp">
-  <link rel="stylesheet" href="css/styles.css?v=3">
+  <link rel="stylesheet" href="css/styles.css?v=4">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"Arulaser","description":"Maquinaria láser profesional para centros estéticos y clínicas.","logo":"img/favicon.svg"}
   </script>
@@ -26,19 +26,19 @@
   <a class="skip" href="#equipos">Saltar al contenido</a>
 
   <!-- ============ CABECERA ============ -->
-  <header class="nav" id="nav">
+  <header class="nav is-top" id="nav">
     <nav class="nav__left" aria-label="Principal">
-      <a href="#equipos">Equipos</a>
-      <a href="#centros">Para tu centro</a>
-      <a href="#formacion">Formación</a>
+      <a href="#equipos" data-sections="equipos,coleccion-depilacion,coleccion-rejuvenecimiento">Equipos</a>
+      <a href="#centros" data-sections="centros,encuentra">Para tu centro</a>
+      <a href="#formacion" data-sections="formacion">Acompañamiento</a>
     </nav>
     <a class="nav__logo" href="#top" aria-label="Arulaser, inicio">
       <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 20h37" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="2.6" fill="currentColor"/></svg>
       <span>ARULASER</span>
     </a>
     <div class="nav__right">
-      <button type="button" class="linklike" data-open-quiz>Encuentra tu equipo</button>
-      <a href="#contacto" class="nav__cta">Contacto</a>
+      <button type="button" class="linklike nav__quiz" data-open-quiz>Encuentra tu equipo</button>
+      <a href="#contacto" class="nav__btn">Pedir demostración</a>
       <button class="nav__burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
     </div>
   </header>
@@ -47,14 +47,14 @@
     <a href="#equipos">Equipos</a>
     <a href="#tratamiento">El tratamiento</a>
     <a href="#centros">Para tu centro</a>
-    <a href="#formacion">Formación y servicio</a>
+    <a href="#formacion">Acompañamiento</a>
     <button type="button" class="linklike" data-open-quiz>Encuentra tu equipo</button>
-    <a href="#contacto">Contacto</a>
+    <a href="#contacto" class="btn btn--ink menu__cta">Pedir demostración</a>
   </div>
 
   <main id="top">
     <!-- ============ HERO ============ -->
-    <section class="hero">
+    <section class="hero" data-nav="dark">
       <video class="hero__media" autoplay muted loop playsinline preload="auto" poster="img/hero.webp" aria-hidden="true">
         <source src="video/hero-m.mp4" type="video/mp4" media="(max-width: 767px)">
         <source src="video/hero.mp4" type="video/mp4">
@@ -63,7 +63,7 @@
       <div class="hero__content">
         <h1 class="display reveal">La luz que<br>transforma<br>tu cabina</h1>
         <div class="hero__actions reveal">
-          <a class="btn btn--light" href="#equipos">Ver equipos</a>
+          <a class="btn btn--white" href="#contacto">Pedir demostración</a>
           <button type="button" class="btn btn--light" data-open-quiz>Encuentra tu equipo</button>
         </div>
       </div>
@@ -71,7 +71,7 @@
     </section>
 
     <!-- ============ VÍDEO SCROLL: TRATAMIENTO FACIAL ============ -->
-    <section class="scrolly" id="tratamiento" data-frames="151" aria-label="El tratamiento, fotograma a fotograma">
+    <section class="scrolly" data-nav="dark" id="tratamiento" data-frames="151" aria-label="El tratamiento, fotograma a fotograma">
       <div class="scrolly__sticky">
         <canvas class="scrolly__canvas" aria-hidden="true"></canvas>
         <img class="scrolly__fallback" src="img/face.webp" alt="Tratamiento láser facial: la pieza de mano con punta de zafiro recorre la mejilla de una clienta con gafas de protección.">
@@ -131,7 +131,7 @@
     </section>
 
     <!-- ============ FRANJA DE VÍDEO ============ -->
-    <section class="band" aria-hidden="true">
+    <section class="band" data-nav="dark" aria-hidden="true">
       <video class="lazy-video" muted loop playsinline preload="none" poster="img/band.webp">
         <source data-src="video/band.mp4" type="video/mp4">
       </video>
@@ -198,7 +198,7 @@
     </section>
 
     <!-- ============ QUIZ ============ -->
-    <section class="match">
+    <section class="match" id="encuentra">
       <img class="match__bg" src="img/quizbg.webp" alt="" loading="lazy" aria-hidden="true">
       <div class="match__box reveal">
         <div class="match__copy">
@@ -214,26 +214,42 @@
       </div>
     </section>
 
-    <!-- ============ FORMACIÓN / SERVICIO ============ -->
-    <section class="split" id="formacion">
-      <article class="split__tile">
-        <video class="lazy-video" muted loop playsinline preload="none" poster="img/formacion.webp" aria-hidden="true"><source data-src="video/formacion.mp4" type="video/mp4"></video>
-        <div class="split__shade"></div>
-        <h2>Formación</h2>
-        <div class="split__text">
-          <p>Te acompañamos en la puesta en marcha con formación práctica para tu equipo y protocolos listos para trabajar desde el primer día.</p>
-          <a href="#contacto">Pedir información</a>
-        </div>
-      </article>
-      <article class="split__tile">
-        <video class="lazy-video" muted loop playsinline preload="none" poster="img/historia.webp" aria-hidden="true"><source data-src="video/historia.mp4" type="video/mp4"></video>
-        <div class="split__shade"></div>
-        <h2 class="right">Servicio técnico</h2>
-        <div class="split__text">
-          <p>Revisiones, calibración y asistencia para que tu equipo esté siempre a punto. Una cabina parada es una agenda perdida.</p>
-          <a href="#contacto">Hablar con un técnico</a>
-        </div>
-      </article>
+    <!-- ============ ACOMPAÑAMIENTO ============ -->
+    <section class="care" id="formacion" aria-labelledby="care-t">
+      <div class="care__media reveal">
+        <figure class="care__layer is-on"><img src="img/hero.webp" alt="Equipo de depilación instalado en una cabina, junto a la camilla" loading="lazy" style="object-position: 64% 50%"></figure>
+        <figure class="care__layer"><video muted loop playsinline preload="none" poster="img/formacion.webp" aria-label="Una formadora explica los parámetros del equipo a dos esteticistas"><source data-src="video/formacion.mp4" type="video/mp4"></video></figure>
+        <figure class="care__layer"><img src="img/col1.webp" alt="Manos con guantes ajustando un protocolo en la pantalla táctil del equipo" loading="lazy"></figure>
+        <figure class="care__layer"><video muted loop playsinline preload="none" poster="img/historia.webp" aria-label="Un técnico calibra un equipo láser en el taller"><source data-src="video/historia.mp4" type="video/mp4"></video></figure>
+        <p class="care__count" aria-hidden="true"><b>01</b> / 04</p>
+      </div>
+      <div class="care__copy">
+        <p class="eyebrow">Después de la entrega</p>
+        <h2 id="care-t" class="display display--ink">Te acompañamos desde el primer disparo</h2>
+        <ol class="care__list">
+          <li class="is-on">
+            <button type="button" aria-expanded="true" aria-controls="care-d0"><span class="care__n">01</span><span class="care__t">Instalación y puesta en marcha</span></button>
+            <div class="care__d" id="care-d0"><p>Instalamos el equipo en tu centro y lo dejamos calibrado y listo para trabajar.</p></div>
+            <span class="care__bar" aria-hidden="true"></span>
+          </li>
+          <li>
+            <button type="button" aria-expanded="false" aria-controls="care-d1"><span class="care__n">02</span><span class="care__t">Formación práctica</span></button>
+            <div class="care__d" id="care-d1"><p>Formación en cabina para tu equipo, con casos reales y los parámetros de cada tratamiento.</p></div>
+            <span class="care__bar" aria-hidden="true"></span>
+          </li>
+          <li>
+            <button type="button" aria-expanded="false" aria-controls="care-d2"><span class="care__n">03</span><span class="care__t">Protocolos listos para usar</span></button>
+            <div class="care__d" id="care-d2"><p>Protocolos por fototipo y zona cargados en el equipo, para trabajar con seguridad desde el primer día.</p></div>
+            <span class="care__bar" aria-hidden="true"></span>
+          </li>
+          <li>
+            <button type="button" aria-expanded="false" aria-controls="care-d3"><span class="care__n">04</span><span class="care__t">Servicio técnico</span></button>
+            <div class="care__d" id="care-d3"><p>Revisiones, calibración y asistencia para que tu cabina no se pare. Una cabina parada es una agenda perdida.</p></div>
+            <span class="care__bar" aria-hidden="true"></span>
+          </li>
+        </ol>
+        <a class="btn btn--ink" href="#contacto">Pedir demostración</a>
+      </div>
     </section>
 
     <!-- ============ CONTACTO ============ -->
@@ -245,9 +261,9 @@
       <form class="form" id="form-contacto" action="enviar.php" method="post" novalidate>
         <input type="hidden" name="tipo" value="demostracion">
         <div class="hp" aria-hidden="true"><label>No rellenar <input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
-        <label class="field"><span>Nombre y apellidos</span><input name="nombre" required autocomplete="name"></label>
+        <label class="field"><span>Nombre y apellidos <i aria-hidden="true">*</i></span><input name="nombre" required autocomplete="name" data-msg="Indica tu nombre."></label>
         <label class="field"><span>Centro o clínica</span><input name="centro" autocomplete="organization"></label>
-        <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email"></label>
+        <label class="field"><span>Email <i aria-hidden="true">*</i></span><input name="email" type="email" required autocomplete="email" inputmode="email" data-msg="Introduce un email válido, por ejemplo nombre@centro.es."></label>
         <label class="field"><span>Teléfono</span><input name="telefono" type="tel" autocomplete="tel"></label>
         <label class="field"><span>Provincia</span><input name="provincia" autocomplete="address-level2"></label>
         <label class="field"><span>Equipo de interés</span>
@@ -256,8 +272,9 @@
           </select>
         </label>
         <label class="field field--wide"><span>Mensaje</span><textarea name="mensaje" rows="4" placeholder="Tratamientos que quieres ofrecer, número de cabinas, plazos…"></textarea></label>
-        <label class="check field--wide"><input type="checkbox" name="privacidad" required> <span>He leído y acepto la <button type="button" class="linklike u" data-open-privacy>política de privacidad</button>.</span></label>
+        <label class="check field--wide"><input type="checkbox" name="privacidad" required data-msg="Acepta la política de privacidad para poder enviarla."> <span>He leído y acepto la <button type="button" class="linklike u" data-open-privacy>política de privacidad</button>.</span></label>
         <p class="legal field--wide"><strong>Responsable:</strong> Arulaser. <strong>Finalidad:</strong> responder a tu solicitud y organizar la demostración. <strong>Legitimación:</strong> tu consentimiento. <strong>Destinatarios:</strong> no se ceden datos a terceros salvo obligación legal. <strong>Derechos:</strong> acceso, rectificación, supresión y demás, como se explica en la política de privacidad.</p>
+        <p class="form__req field--wide"><i aria-hidden="true">*</i> Campos obligatorios</p>
         <div class="form__foot field--wide">
           <button class="btn btn--ink" type="submit">Enviar solicitud</button>
           <p class="form__status" role="status" aria-live="polite"></p>
@@ -267,11 +284,11 @@
   </main>
 
   <!-- ============ PIE ============ -->
-  <footer class="footer">
+  <footer class="footer" data-nav="dark">
     <div class="footer__word" aria-hidden="true">ARULASER</div>
     <div class="footer__grid">
       <div class="footer__news">
-        <h3>Novedades Arulaser</h3>
+        <h2 class="footer__h">Novedades Arulaser</h2>
         <p>Lanzamientos, formaciones y novedades técnicas, sin saturar tu bandeja.</p>
         <form class="news" action="enviar.php" method="post" novalidate>
           <input type="hidden" name="tipo" value="newsletter">
@@ -284,7 +301,7 @@
         <p class="news__status" role="status" aria-live="polite"></p>
       </div>
       <div>
-        <h3>Equipos</h3>
+        <h2 class="footer__h">Equipos</h2>
         <ul>
           <li><a href="#coleccion-depilacion">Depilación láser</a></li>
           <li><a href="#coleccion-rejuvenecimiento">Rejuvenecimiento</a></li>
@@ -293,7 +310,7 @@
         </ul>
       </div>
       <div>
-        <h3>Arulaser</h3>
+        <h2 class="footer__h">Arulaser</h2>
         <ul>
           <li><a href="#tratamiento">El tratamiento</a></li>
           <li><button type="button" class="linklike" data-open-quiz>Encuentra tu equipo</button></li>
@@ -399,6 +416,6 @@
     </div>
   </dialog>
 
-  <script src="js/main.js?v=2" defer></script>
+  <script src="js/main.js?v=3" defer></script>
 </body>
 </html>
