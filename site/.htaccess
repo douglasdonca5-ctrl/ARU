@@ -1,0 +1,38 @@
+Options -Indexes
+DirectoryIndex index.html
+
+# HTTPS siempre
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Tipos
+AddType image/webp .webp
+AddType font/woff2 .woff2
+AddType video/mp4 .mp4
+
+# Caché: recursos con versión o que no cambian
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType image/webp "access plus 180 days"
+  ExpiresByType image/jpeg "access plus 180 days"
+  ExpiresByType image/svg+xml "access plus 180 days"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 180 days"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/json
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # Dominio temporal: fuera de los buscadores
+  Header always set X-Robots-Tag "noindex, nofollow"
+</IfModule>

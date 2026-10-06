@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Arulaser — Maquinaria láser para centros estéticos</title>
+  <meta name="description" content="Arulaser diseña y distribuye maquinaria láser profesional para centros estéticos, clínicas y dermatología: depilación láser, picosegundo, Q-Switch, CO₂ fraccionado y vascular.">
+  <!-- Dominio temporal: no indexar hasta publicar en el dominio definitivo -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141414">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Arulaser — Maquinaria láser para centros estéticos">
+  <meta property="og:description" content="Tecnología láser profesional para centros estéticos y clínicas, con formación y servicio técnico.">
+  <meta property="og:image" content="img/og.jpg">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" as="font" type="font/woff2" href="fonts/marcellus.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="fonts/hanken.woff2" crossorigin>
+  <link rel="preload" as="image" href="img/hero.webp">
+  <link rel="stylesheet" href="css/styles.css?v=3">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Arulaser","description":"Maquinaria láser profesional para centros estéticos y clínicas.","logo":"img/favicon.svg"}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#equipos">Saltar al contenido</a>
+
+  <!-- ============ CABECERA ============ -->
+  <header class="nav" id="nav">
+    <nav class="nav__left" aria-label="Principal">
+      <a href="#equipos">Equipos</a>
+      <a href="#centros">Para tu centro</a>
+      <a href="#formacion">Formación</a>
+    </nav>
+    <a class="nav__logo" href="#top" aria-label="Arulaser, inicio">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 20h37" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="2.6" fill="currentColor"/></svg>
+      <span>ARULASER</span>
+    </a>
+    <div class="nav__right">
+      <button type="button" class="linklike" data-open-quiz>Encuentra tu equipo</button>
+      <a href="#contacto" class="nav__cta">Contacto</a>
+      <button class="nav__burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" hidden>
+    <a href="#equipos">Equipos</a>
+    <a href="#tratamiento">El tratamiento</a>
+    <a href="#centros">Para tu centro</a>
+    <a href="#formacion">Formación y servicio</a>
+    <button type="button" class="linklike" data-open-quiz>Encuentra tu equipo</button>
+    <a href="#contacto">Contacto</a>
+  </div>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <video class="hero__media" autoplay muted loop playsinline preload="auto" poster="img/hero.webp" aria-hidden="true">
+        <source src="video/hero-m.mp4" type="video/mp4" media="(max-width: 767px)">
+        <source src="video/hero.mp4" type="video/mp4">
+      </video>
+      <div class="hero__shade"></div>
+      <div class="hero__content">
+        <h1 class="display reveal">La luz que<br>transforma<br>tu cabina</h1>
+        <div class="hero__actions reveal">
+          <a class="btn btn--light" href="#equipos">Ver equipos</a>
+          <button type="button" class="btn btn--light" data-open-quiz>Encuentra tu equipo</button>
+        </div>
+      </div>
+      <p class="hero__aside reveal">Maquinaria láser profesional para centros estéticos y clínicas. Diseñada para trabajar cada día, acompañada de formación y servicio técnico.</p>
+    </section>
+
+    <!-- ============ VÍDEO SCROLL: TRATAMIENTO FACIAL ============ -->
+    <section class="scrolly" id="tratamiento" data-frames="151" aria-label="El tratamiento, fotograma a fotograma">
+      <div class="scrolly__sticky">
+        <canvas class="scrolly__canvas" aria-hidden="true"></canvas>
+        <img class="scrolly__fallback" src="img/face.webp" alt="Tratamiento láser facial: la pieza de mano con punta de zafiro recorre la mejilla de una clienta con gafas de protección.">
+        <div class="scrolly__shade"></div>
+        <div class="scrolly__intro">
+          <p class="eyebrow">El tratamiento</p>
+          <h2 class="display">Precisión<br>en cada disparo</h2>
+          <p class="scrolly__hint"><span></span>Desliza para verlo</p>
+        </div>
+        <ol class="scrolly__steps">
+          <li data-from="0.18" data-to="0.45">
+            <span class="step__n">01 · Contacto</span>
+            <p>La punta de zafiro refrigerada se apoya sobre la piel y protege la epidermis antes de cada disparo.</p>
+          </li>
+          <li data-from="0.45" data-to="0.72">
+            <span class="step__n">02 · Disparo</span>
+            <p>Energía estable pulso a pulso. El haz guía marca el punto exacto donde actúa la luz.</p>
+          </li>
+          <li data-from="0.72" data-to="1.01">
+            <span class="step__n">03 · Recorrido</span>
+            <p>Pasadas suaves y continuas, con protocolos guardados por fototipo y zona para repetir el resultado en cada sesión.</p>
+          </li>
+        </ol>
+        <div class="scrolly__progress" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <!-- ============ DESTACADOS ============ -->
+    <section class="features" id="equipos">
+      <div class="feature-row">
+        <article class="feature reveal">
+          <img src="img/retrato.webp" alt="Retrato de una mujer con la piel luminosa apoyada sobre su brazo" loading="lazy" width="1400" height="1400">
+          <div class="feature__body">
+            <h2 class="display">Los más<br>elegidos</h2>
+            <div class="feature__side">
+              <p>Los equipos que más piden nuestros centros: versátiles, rápidos de aprender y pensados para llenar agenda. Si solo vas a tener uno, empieza por aquí.</p>
+              <a class="btn btn--light btn--block" href="#coleccion-depilacion">Ver todos los equipos</a>
+            </div>
+          </div>
+        </article>
+        <div class="feature-products" data-products="trio,pico"></div>
+      </div>
+
+      <div class="feature-row feature-row--flip">
+        <div class="feature-products" data-products="compact,vascular"></div>
+        <article class="feature reveal">
+          <img src="img/tip.webp" alt="Detalle de la punta de zafiro de una pieza de mano láser con gotas de gel refrigerante" loading="lazy" width="1400" height="1400">
+          <div class="feature__body">
+            <h2 class="display">Novedades</h2>
+            <div class="feature__side">
+              <p>Nuevos formatos, la misma precisión. Equipos compactos para abrir una segunda cabina o sumar tratamientos sin cambiar de espacio.</p>
+              <a class="btn btn--light btn--block" href="#coleccion-rejuvenecimiento">Ver novedades</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ FRANJA DE VÍDEO ============ -->
+    <section class="band" aria-hidden="true">
+      <video class="lazy-video" muted loop playsinline preload="none" poster="img/band.webp">
+        <source data-src="video/band.mp4" type="video/mp4">
+      </video>
+    </section>
+
+    <!-- ============ TECNOLOGÍAS ============ -->
+    <section class="techs" aria-labelledby="techs-t">
+      <h2 id="techs-t" class="techs__title">Tecnologías que trabajamos</h2>
+      <div class="techs__track">
+        <ul class="techs__list">
+          <li class="t1">Diodo</li><li class="t2">Alejandrita</li><li class="t3">IPL·SHR</li><li class="t4">Picosegundo</li><li class="t5">Nd:YAG</li><li class="t6">CO₂ Fraccionado</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ COLECCIONES ============ -->
+    <section class="collection" id="coleccion-depilacion">
+      <header class="collection__head">
+        <h2>Depilación láser</h2>
+        <button type="button" class="linklike" data-open-quiz>¿Cuál elijo?</button>
+      </header>
+      <div class="grid4" data-products="trio,compact,alex,ipl"></div>
+    </section>
+
+    <section class="collection" id="coleccion-rejuvenecimiento">
+      <header class="collection__head">
+        <h2>Rejuvenecimiento, pigmento y vascular</h2>
+        <button type="button" class="linklike" data-open-quiz>¿Cuál elijo?</button>
+      </header>
+      <div class="grid4" data-products="pico,qs,co2,vascular"></div>
+    </section>
+
+    <!-- ============ PARA CADA CENTRO ============ -->
+    <section class="centers" id="centros">
+      <header class="centers__head">
+        <h2 class="display display--ink">Un equipo para<br class="m-only"> cada centro</h2>
+        <div class="arrows">
+          <button type="button" class="arrow" data-dir="-1" aria-label="Anterior"><svg viewBox="0 0 40 16"><path d="M40 8H2M9 1 2 8l7 7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+          <button type="button" class="arrow" data-dir="1" aria-label="Siguiente"><svg viewBox="0 0 40 16"><path d="M0 8h38M31 1l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+        </div>
+      </header>
+      <div class="carousel" tabindex="0" aria-label="Tipos de centro">
+        <figure class="ccard ccard--img"><img src="img/uc-depilacion.webp" alt="Esteticista tratando la pierna de una clienta con un láser de diodo" loading="lazy" width="800" height="1000"></figure>
+        <div class="ccard ccard--text">
+          <p>Depilación para todos los fototipos en la misma cabina, sin cambiar de equipo entre clientas.</p>
+          <div><strong>Centros de depilación</strong><span>Aru Trio · Aru Compact</span></div>
+        </div>
+        <figure class="ccard ccard--img"><img src="img/uc-clinica.webp" alt="Doctora conversando con una paciente en una consulta médico-estética" loading="lazy" width="800" height="1000"></figure>
+        <div class="ccard ccard--text">
+          <p>Resurfacing, manchas y tatuajes con equipos de grado clínico y parámetros que tu equipo médico puede ajustar.</p>
+          <div><strong>Clínicas médico-estéticas</strong><span>Aru CO₂ Fraccional · Aru Pico</span></div>
+        </div>
+        <figure class="ccard ccard--img"><img src="img/uc-derma.webp" alt="Dermatóloga examinando la piel de un paciente con una lupa iluminada" loading="lazy" width="800" height="1000"></figure>
+        <div class="ccard ccard--text">
+          <p>Lesiones pigmentadas y vasculares tratadas con precisión, en una consulta de cualquier tamaño.</p>
+          <div><strong>Dermatología</strong><span>Aru Q-Switch · Aru Vascular 980</span></div>
+        </div>
+        <figure class="ccard ccard--img"><img src="img/uc-spa.webp" alt="Sala de spa con camilla y un equipo láser de sobremesa" loading="lazy" width="800" height="1000"></figure>
+        <div class="ccard ccard--text">
+          <p>Equipos de sobremesa que se integran en tu spa y suman servicios sin obras ni cabinas nuevas.</p>
+          <div><strong>Spas y wellness</strong><span>Aru Compact · Aru IPL·SHR</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section class="match">
+      <img class="match__bg" src="img/quizbg.webp" alt="" loading="lazy" aria-hidden="true">
+      <div class="match__box reveal">
+        <div class="match__copy">
+          <h2 class="display display--ink">Encuentra tu<br>equipo ideal</h2>
+          <p>¿No sabes por dónde empezar? Responde tres preguntas y te recomendamos el equipo que mejor encaja con tu centro.</p>
+          <button type="button" class="btn" data-open-quiz>Encontrar mi equipo</button>
+        </div>
+        <div class="match__collage" aria-hidden="true">
+          <img class="c1" src="img/col1.webp" alt="" loading="lazy">
+          <img class="c2" src="img/col3.webp" alt="" loading="lazy">
+          <img class="c3" src="img/col2.webp" alt="" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FORMACIÓN / SERVICIO ============ -->
+    <section class="split" id="formacion">
+      <article class="split__tile">
+        <video class="lazy-video" muted loop playsinline preload="none" poster="img/formacion.webp" aria-hidden="true"><source data-src="video/formacion.mp4" type="video/mp4"></video>
+        <div class="split__shade"></div>
+        <h2>Formación</h2>
+        <div class="split__text">
+          <p>Te acompañamos en la puesta en marcha con formación práctica para tu equipo y protocolos listos para trabajar desde el primer día.</p>
+          <a href="#contacto">Pedir información</a>
+        </div>
+      </article>
+      <article class="split__tile">
+        <video class="lazy-video" muted loop playsinline preload="none" poster="img/historia.webp" aria-hidden="true"><source data-src="video/historia.mp4" type="video/mp4"></video>
+        <div class="split__shade"></div>
+        <h2 class="right">Servicio técnico</h2>
+        <div class="split__text">
+          <p>Revisiones, calibración y asistencia para que tu equipo esté siempre a punto. Una cabina parada es una agenda perdida.</p>
+          <a href="#contacto">Hablar con un técnico</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ CONTACTO ============ -->
+    <section class="contact" id="contacto">
+      <div class="contact__intro">
+        <h2 class="display display--ink">Pide una<br>demostración</h2>
+        <p>Cuéntanos qué centro tienes y qué tratamientos quieres ofrecer. Te contactamos para organizar una demostración del equipo en tu cabina.</p>
+      </div>
+      <form class="form" id="form-contacto" action="enviar.php" method="post" novalidate>
+        <input type="hidden" name="tipo" value="demostracion">
+        <div class="hp" aria-hidden="true"><label>No rellenar <input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
+        <label class="field"><span>Nombre y apellidos</span><input name="nombre" required autocomplete="name"></label>
+        <label class="field"><span>Centro o clínica</span><input name="centro" autocomplete="organization"></label>
+        <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email"></label>
+        <label class="field"><span>Teléfono</span><input name="telefono" type="tel" autocomplete="tel"></label>
+        <label class="field"><span>Provincia</span><input name="provincia" autocomplete="address-level2"></label>
+        <label class="field"><span>Equipo de interés</span>
+          <select name="equipo" id="equipo-select">
+            <option value="">Aún no lo sé</option>
+          </select>
+        </label>
+        <label class="field field--wide"><span>Mensaje</span><textarea name="mensaje" rows="4" placeholder="Tratamientos que quieres ofrecer, número de cabinas, plazos…"></textarea></label>
+        <label class="check field--wide"><input type="checkbox" name="privacidad" required> <span>He leído y acepto la <button type="button" class="linklike u" data-open-privacy>política de privacidad</button>.</span></label>
+        <p class="legal field--wide"><strong>Responsable:</strong> Arulaser. <strong>Finalidad:</strong> responder a tu solicitud y organizar la demostración. <strong>Legitimación:</strong> tu consentimiento. <strong>Destinatarios:</strong> no se ceden datos a terceros salvo obligación legal. <strong>Derechos:</strong> acceso, rectificación, supresión y demás, como se explica en la política de privacidad.</p>
+        <div class="form__foot field--wide">
+          <button class="btn btn--ink" type="submit">Enviar solicitud</button>
+          <p class="form__status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- ============ PIE ============ -->
+  <footer class="footer">
+    <div class="footer__word" aria-hidden="true">ARULASER</div>
+    <div class="footer__grid">
+      <div class="footer__news">
+        <h3>Novedades Arulaser</h3>
+        <p>Lanzamientos, formaciones y novedades técnicas, sin saturar tu bandeja.</p>
+        <form class="news" action="enviar.php" method="post" novalidate>
+          <input type="hidden" name="tipo" value="newsletter">
+          <div class="hp" aria-hidden="true"><input type="text" name="web" tabindex="-1" autocomplete="off"></div>
+          <input type="hidden" name="privacidad" value="on">
+          <label class="sr" for="news-email">Email</label>
+          <input id="news-email" name="email" type="email" placeholder="Tu email" required autocomplete="email">
+          <button type="submit">Suscribirme</button>
+        </form>
+        <p class="news__status" role="status" aria-live="polite"></p>
+      </div>
+      <div>
+        <h3>Equipos</h3>
+        <ul>
+          <li><a href="#coleccion-depilacion">Depilación láser</a></li>
+          <li><a href="#coleccion-rejuvenecimiento">Rejuvenecimiento</a></li>
+          <li><a href="#coleccion-rejuvenecimiento">Pigmento y tatuajes</a></li>
+          <li><a href="#coleccion-rejuvenecimiento">Vascular</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Arulaser</h3>
+        <ul>
+          <li><a href="#tratamiento">El tratamiento</a></li>
+          <li><button type="button" class="linklike" data-open-quiz>Encuentra tu equipo</button></li>
+          <li><a href="#formacion">Formación y servicio</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>ARULASER © 2026</span>
+      <button type="button" class="linklike" data-open-privacy>Privacidad</button>
+      <span>Maquinaria láser profesional</span>
+    </div>
+  </footer>
+
+  <!-- ============ FICHA DE PRODUCTO ============ -->
+  <dialog class="sheet" id="product-sheet" aria-labelledby="ps-name">
+    <button class="sheet__close" type="button" data-close aria-label="Cerrar">&times;</button>
+    <div class="sheet__inner">
+      <div class="sheet__media"><img id="ps-img" alt=""></div>
+      <div class="sheet__info">
+        <p class="eyebrow" id="ps-no"></p>
+        <h2 class="display display--ink" id="ps-name"></h2>
+        <p class="sheet__tech" id="ps-tech"></p>
+        <p id="ps-desc"></p>
+        <ul class="sheet__specs" id="ps-specs"></ul>
+        <div class="sheet__actions">
+          <button class="btn btn--ink" type="button" id="ps-demo">Pedir demostración</button>
+          <button class="btn" type="button" id="ps-ficha">Solicitar ficha técnica</button>
+        </div>
+        <p class="sheet__note">Ficha técnica completa y configuración bajo solicitud.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ============ QUIZ ============ -->
+  <dialog class="quiz" id="quiz" aria-labelledby="quiz-t">
+    <button class="sheet__close" type="button" data-close aria-label="Cerrar">&times;</button>
+    <div class="quiz__inner">
+      <p class="quiz__brand">Encuentra tu equipo</p>
+      <div class="quiz__bar"><span></span></div>
+      <div class="quiz__step is-on" data-step="0">
+        <h2 id="quiz-t" class="display display--ink">¿Qué tratamientos quieres ofrecer?</h2>
+        <div class="opts" data-key="trat">
+          <button type="button" data-v="depilacion">Depilación láser</button>
+          <button type="button" data-v="pigmento">Manchas y tatuajes</button>
+          <button type="button" data-v="rejuv">Textura, poros y cicatrices</button>
+          <button type="button" data-v="vascular">Lesiones vasculares</button>
+        </div>
+      </div>
+      <div class="quiz__step" data-step="1">
+        <h2 class="display display--ink">¿Qué tipo de centro tienes?</h2>
+        <div class="opts" data-key="centro">
+          <button type="button" data-v="estetica">Centro de estética</button>
+          <button type="button" data-v="clinica">Clínica médico-estética</button>
+          <button type="button" data-v="spa">Spa o wellness</button>
+          <button type="button" data-v="derma">Consulta de dermatología</button>
+        </div>
+      </div>
+      <div class="quiz__step" data-step="2">
+        <h2 class="display display--ink">¿Cómo vas a trabajar con él?</h2>
+        <div class="opts" data-key="uso">
+          <button type="button" data-v="volumen">Una cabina con mucha agenda</button>
+          <button type="button" data-v="varias">Varias cabinas a la vez</button>
+          <button type="button" data-v="movil">Moviéndolo entre cabinas o centros</button>
+        </div>
+      </div>
+      <div class="quiz__step" data-step="3">
+        <h2 class="display display--ink">Buscando tu equipo…</h2>
+      </div>
+      <div class="quiz__step quiz__result" data-step="4">
+        <p class="eyebrow">Tu equipo</p>
+        <div class="result">
+          <img id="qr-img" alt="">
+          <div>
+            <h2 class="display display--ink" id="qr-name"></h2>
+            <p class="sheet__tech" id="qr-tech"></p>
+            <p id="qr-why"></p>
+            <p class="result__alt" id="qr-alt"></p>
+            <div class="sheet__actions">
+              <button class="btn btn--ink" type="button" id="qr-demo">Pedir demostración</button>
+              <button class="btn" type="button" id="qr-more">Ver ficha</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quiz__nav">
+        <button type="button" class="linklike" id="quiz-back" hidden>&larr; Atrás</button>
+        <button type="button" class="linklike" id="quiz-restart" hidden>Volver a empezar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ============ PRIVACIDAD ============ -->
+  <dialog class="privacy" id="privacy" aria-labelledby="pv-t">
+    <button class="sheet__close" type="button" data-close aria-label="Cerrar">&times;</button>
+    <div class="privacy__inner">
+      <h2 id="pv-t" class="display display--ink">Privacidad</h2>
+      <p>Los datos que nos envías a través de los formularios de esta web se tratan con el único fin de responder a tu solicitud, organizar demostraciones y, si te suscribes, enviarte novedades de Arulaser.</p>
+      <p>La base legal es tu consentimiento, que puedes retirar en cualquier momento. Conservamos los datos mientras sean necesarios para atender tu solicitud o hasta que pidas su supresión. No los cedemos a terceros salvo obligación legal.</p>
+      <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiéndonos a través del formulario de contacto, y presentar una reclamación ante la Agencia Española de Protección de Datos (aepd.es).</p>
+      <p>Esta web no utiliza cookies de análisis ni de publicidad.</p>
+    </div>
+  </dialog>
+
+  <script src="js/main.js?v=2" defer></script>
+</body>
+</html>
