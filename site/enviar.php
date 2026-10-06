@@ -1,8 +1,8 @@
 <?php
 /**
- * Arulaser — recepción de formularios (demostración y newsletter).
+ * Aruesthetics — recepción de formularios (demostración y newsletter).
  *
- * Guarda cada envío en ../arulaser-datos/ (fuera de public_html, para que un
+ * Guarda cada envío en ../aruesthetics-datos/ (fuera de public_html, para que un
  * nuevo despliegue no lo borre ni sea accesible desde la web) y, si se
  * configura DESTINO, envía además un aviso por email.
  */
@@ -68,14 +68,14 @@ if ($tipo === 'demostracion') {
 }
 
 // Carpeta de datos fuera de la raíz pública
-$dir = dirname(__DIR__) . '/arulaser-datos';
+$dir = dirname(__DIR__) . '/aruesthetics-datos';
 if (!is_dir($dir) && !@mkdir($dir, 0700, true)) {
-    error_log('Arulaser: no se pudo crear ' . $dir);
+    error_log('Aruesthetics: no se pudo crear ' . $dir);
     responder(false, 'No se ha podido enviar. Inténtalo de nuevo en unos minutos.', 500);
 }
 
 // Límite sencillo: 6 envíos por IP cada 10 minutos
-$ipHash = hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . '|arulaser');
+$ipHash = hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . '|aruesthetics');
 $limiteFile = $dir . '/limite.json';
 $ahora = time();
 $limites = is_file($limiteFile) ? (json_decode((string)file_get_contents($limiteFile), true) ?: []) : [];
@@ -90,18 +90,18 @@ $limites[$ipHash] = $mios;
 
 $linea = json_encode($datos, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n";
 if (@file_put_contents($dir . '/' . $tipo . '.jsonl', $linea, FILE_APPEND | LOCK_EX) === false) {
-    error_log('Arulaser: no se pudo guardar el envío');
+    error_log('Aruesthetics: no se pudo guardar el envío');
     responder(false, 'No se ha podido enviar. Inténtalo de nuevo en unos minutos.', 500);
 }
 
 if (DESTINO !== '') {
-    $asunto = $tipo === 'newsletter' ? 'Arulaser · nueva suscripción' : 'Arulaser · solicitud de demostración';
+    $asunto = $tipo === 'newsletter' ? 'Aruesthetics · nueva suscripción' : 'Aruesthetics · solicitud de demostración';
     $cuerpo = '';
     foreach ($datos as $k => $v) {
         $cuerpo .= ucfirst($k) . ': ' . $v . "\n";
     }
     $cabeceras = [
-        'From: Arulaser <' . REMITENTE . '>',
+        'From: Aruesthetics <' . REMITENTE . '>',
         'Reply-To: ' . $email,
         'Content-Type: text/plain; charset=utf-8',
     ];

@@ -1,5 +1,5 @@
 /* ==========================================================
-   Arulaser — hoja de estilos
+   Aruesthetics — hoja de estilos
    Paleta y tipografía inspiradas en un catálogo editorial:
    gris claro, tinta casi negra, serif en mayúsculas.
    ========================================================== */
@@ -357,7 +357,7 @@ ul, ol { list-style: none; padding: 0; }
 /* ---------- Pie ---------- */
 .footer { background: var(--dark); color: #fff; padding: 24px 24px 24px; overflow: hidden; }
 .footer__word {
-  font-family: var(--serif); font-size: 20.6vw; line-height: .86; letter-spacing: -.025em; text-align: center; white-space: nowrap;
+  font-family: var(--serif); font-size: 14.6vw; line-height: .9; letter-spacing: -.025em; text-align: center; white-space: nowrap;
   color: #141414;
   text-shadow: .012em .016em 0 #6a6a6a, .012em .016em .05em rgba(190,190,190,.35), -.004em -.004em 0 #000;
   margin: 6px -24px 64px;

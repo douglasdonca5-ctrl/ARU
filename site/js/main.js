@@ -1,5 +1,5 @@
 /* ==========================================================
-   Arulaser — interacción de la página
+   Aruesthetics — interacción de la página
    ========================================================== */
 (() => {
   'use strict';
@@ -15,42 +15,42 @@
   /* ---------- Catálogo ---------- */
   const PRODUCTS = {
     trio: {
-      no: 'No. 01', name: 'Aru Trio', tech: 'Diodo · 755 / 808 / 1064 nm', img: 'img/p01.webp',
+      no: 'No. 01', name: 'Aru Trio', tech: 'Diodo · 755 / 808 / 1064 nm', img: 'img/p01.webp?v=2',
       desc: 'Plataforma de diodo con tres longitudes de onda combinadas en un mismo disparo. Pensada para cabinas de depilación con mucha agenda: un solo equipo para trabajar todos los fototipos y todas las zonas.',
       specs: ['Tres longitudes de onda combinadas: 755, 808 y 1064 nm', 'Pieza de mano con ventana de zafiro refrigerada', 'Pantalla táctil con protocolos por fototipo y zona', 'Formato torre con ruedas ocultas'],
     },
     compact: {
-      no: 'No. 02', name: 'Aru Compact', tech: 'Diodo · 808 nm', img: 'img/p02.webp', tag: 'Nuevo',
+      no: 'No. 02', name: 'Aru Compact', tech: 'Diodo · 808 nm', img: 'img/p02.webp?v=2', tag: 'Nuevo',
       desc: 'Diodo de sobremesa para centros que empiezan con el láser o necesitan una segunda cabina. Todo el protocolo de depilación en un formato que cabe en cualquier espacio.',
       specs: ['Formato sobremesa, fácil de mover entre cabinas', 'Pieza de mano con punta de zafiro', 'Interfaz táctil frontal con modos guiados', 'Ideal como primer equipo o cabina de apoyo'],
     },
     alex: {
-      no: 'No. 03', name: 'Aru Alex 755', tech: 'Alejandrita · 755 nm', img: 'img/p03.webp',
+      no: 'No. 03', name: 'Aru Alex 755', tech: 'Alejandrita · 755 nm', img: 'img/p03.webp?v=2',
       desc: 'Láser de alejandrita para vello fino y claro en fototipos bajos, con pieza de mano de spot redondo y refrigeración integrada.',
       specs: ['Longitud de onda de 755 nm', 'Pieza de mano de spot redondo', 'Refrigeración integrada en la pieza de mano', 'Mueble con ruedas y soporte lateral'],
     },
     ipl: {
-      no: 'No. 04', name: 'Aru IPL·SHR', tech: 'Luz pulsada · SHR', img: 'img/p04.webp',
+      no: 'No. 04', name: 'Aru IPL·SHR', tech: 'Luz pulsada · SHR', img: 'img/p04.webp?v=2',
       desc: 'Luz pulsada intensa con modo SHR de barrido para depilación progresiva y fotorrejuvenecimiento. Dos piezas de mano en el mismo equipo.',
       specs: ['Dos piezas de mano con cristal guía de luz', 'Modo SHR de barrido', 'Filtros para depilación y fotorrejuvenecimiento', 'Consola sobre pedestal'],
     },
     pico: {
-      no: 'No. 05', name: 'Aru Pico', tech: 'Picosegundo', img: 'img/p05.webp',
+      no: 'No. 05', name: 'Aru Pico', tech: 'Picosegundo', img: 'img/p05.webp?v=2',
       desc: 'Láser de picosegundos para eliminación de tatuajes y pigmento. Brazo articulado de siete articulaciones para llegar a cualquier zona sin forzar la postura.',
       specs: ['Pulsos en el rango de los picosegundos', 'Brazo articulado de siete articulaciones', 'Indicado para tatuajes multicolor y lesiones pigmentadas', 'Pantalla táctil con parámetros guardables'],
     },
     qs: {
-      no: 'No. 06', name: 'Aru Q-Switch', tech: 'Nd:YAG · 1064 / 532 nm', img: 'img/p06.webp',
+      no: 'No. 06', name: 'Aru Q-Switch', tech: 'Nd:YAG · 1064 / 532 nm', img: 'img/p06.webp?v=2',
       desc: 'Nd:YAG Q-Switched para tatuajes, manchas y carbon peel. Pieza de mano con zoom para ajustar el spot sin cambiar de cabezal.',
       specs: ['Longitudes de onda de 1064 y 532 nm', 'Pieza de mano con zoom de spot', 'Protocolos de carbon peel', 'Mueble compacto con ruedas'],
     },
     co2: {
-      no: 'No. 07', name: 'Aru CO₂ Fraccional', tech: 'CO₂ · 10.600 nm', img: 'img/p07.webp',
+      no: 'No. 07', name: 'Aru CO₂ Fraccional', tech: 'CO₂ · 10.600 nm', img: 'img/p07.webp?v=2',
       desc: 'CO₂ fraccionado con escáner para resurfacing, textura y cicatrices. Brazo de espejos articulado y patrones de escaneo configurables.',
       specs: ['Longitud de onda de 10.600 nm', 'Escáner con patrones configurables', 'Brazo articulado de espejos', 'Indicado para textura, poros y cicatrices'],
     },
     vascular: {
-      no: 'No. 08', name: 'Aru Vascular 980', tech: 'Diodo · 980 nm', img: 'img/p08.webp', tag: 'Nuevo',
+      no: 'No. 08', name: 'Aru Vascular 980', tech: 'Diodo · 980 nm', img: 'img/p08.webp?v=2', tag: 'Nuevo',
       desc: 'Diodo de 980 nm de sobremesa para arañas vasculares y lesiones vasculares finas. Pieza de mano tipo lápiz con fibra para trabajar con precisión.',
       specs: ['Longitud de onda de 980 nm', 'Pieza de mano tipo lápiz con fibra', 'Formato sobremesa', 'Indicado para arañas vasculares y puntos rubí'],
     },

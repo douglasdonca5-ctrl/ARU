@@ -3,3 +3,4 @@ src/vid/
 src/prev/
 *.zip
 .DS_Store
+src/raw2/
