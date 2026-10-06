@@ -205,34 +205,63 @@
     show(0);
   }
 
-  /* ---------- Para cada centro: el scroll vertical desplaza las tarjetas en horizontal ---------- */
+  /* ---------- Para cada centro: el scroll vertical desplaza las tarjetas en horizontal ----------
+     La altura de la sección y el recorrido no dependen de innerHeight: en el móvil la barra
+     del navegador cambia innerHeight a mitad de gesto y eso hacía saltar las tarjetas. */
   const centers = $('.centers');
   if (centers) {
-    const car = $('.carousel', centers), arrows = $$('.arrow', centers), cbar = $('.centers__progress span', centers);
-    let dist = 0, hold = 0, cTick = false;
+    const car = $('.carousel', centers), sticky = $('.centers__sticky', centers);
+    const arrows = $$('.arrow', centers), cbar = $('.centers__progress span', centers);
+    const sda = window.CSS && CSS.supports('animation-timeline: view()') && CSS.supports('animation-range: contain 0% contain 100%');
+    let dist = 0, step = 1, lastW = 0, cTick = false;
     centers.classList.add('is-pinned');
+    if (sda) centers.classList.add('is-sdt');
+
+    const hold = () => sticky.offsetHeight * .12;           // igual que --hold: 12svh
+    const startY = () => centers.getBoundingClientRect().top + scrollY + hold();
+    const progress = () => (dist ? Math.min(1, Math.max(0, (scrollY + 0 - startY()) / dist)) : 0);
     const updateCenters = () => {
       cTick = false;
-      const scrolled = -centers.getBoundingClientRect().top;
-      const p = dist ? Math.min(1, Math.max(0, (scrolled - hold) / dist)) : 0;
-      car.style.transform = `translate3d(${(-p * dist).toFixed(1)}px, 0, 0)`;
-      cbar.style.transform = `scaleX(${p})`;
+      const p = progress();
+      if (!sda) { car.style.transform = `translate3d(${(-p * dist).toFixed(1)}px, 0, 0)`; cbar.style.transform = `scaleX(${p})`; }
       arrows[0].classList.toggle('is-on', p > .01);
       arrows[1].classList.toggle('is-on', p < .99);
     };
     const measureCenters = () => {
-      // recorrido horizontal = lo que sobra de la fila; una pausa breve al entrar y al salir
-      dist = Math.max(0, car.scrollWidth - car.parentElement.clientWidth);
-      hold = innerHeight * .12;
-      centers.style.height = `${Math.round(innerHeight + dist + hold * 2)}px`;
+      if (innerWidth === lastW) return;                      // solo cambia con el ancho (giro del móvil)
+      lastW = innerWidth;
+      const first = car.querySelector('.ccard');
+      step = first.getBoundingClientRect().width + parseFloat(getComputedStyle(car).columnGap || '16');
+      dist = Math.max(0, car.scrollWidth - sticky.clientWidth);
+      centers.style.setProperty('--dist', `${dist}px`);
       updateCenters();
     };
-    // 1 px de scroll vertical = 1 px de desplazamiento: las flechas avanzan una tarjeta moviendo la página
-    const cardStep = () => car.querySelector('.ccard').getBoundingClientRect().width + parseFloat(getComputedStyle(car).columnGap || '16');
-    arrows.forEach((a) => a.addEventListener('click', () => scrollBy({ top: cardStep() * Number(a.dataset.dir), behavior: reduceMotion ? 'auto' : 'smooth' })));
+    // Ir a una tarjeta concreta (flechas y gesto horizontal): 1 px vertical = 1 px horizontal
+    const goCard = (dir, force) => {
+      const f = (scrollY - startY()) / step;
+      const last = Math.ceil(dist / step);
+      let i = force ? (dir > 0 ? Math.floor(f + .05) + 1 : Math.ceil(f - .05) - 1) : Math.round(f);
+      i = Math.max(0, Math.min(last, i));
+      scrollTo({ top: Math.round(startY() + Math.min(dist, i * step)), behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+    arrows.forEach((a) => a.addEventListener('click', () => goCard(Number(a.dataset.dir), true)));
+
+    // Deslizar el dedo en horizontal sobre las tarjetas también las mueve
+    let sx = 0, sy = 0, sScroll = 0, mode = null;
+    car.addEventListener('touchstart', (e) => { const t = e.touches[0]; sx = t.clientX; sy = t.clientY; sScroll = scrollY; mode = null; }, { passive: true });
+    car.addEventListener('touchmove', (e) => {
+      const t = e.touches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      if (!mode && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) mode = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+      if (mode === 'h') { e.preventDefault(); scrollTo({ top: sScroll - dx, behavior: 'instant' }); }
+    }, { passive: false });
+    car.addEventListener('touchend', (e) => {
+      if (mode === 'h') { const dx = e.changedTouches[0].clientX - sx; goCard(dx < 0 ? 1 : -1, Math.abs(dx) > 40); }
+      mode = null;
+    });
+
     addEventListener('scroll', () => { if (!cTick) { cTick = true; requestAnimationFrame(updateCenters); } }, { passive: true });
     addEventListener('resize', measureCenters);
-    addEventListener('load', measureCenters);
+    addEventListener('load', () => { lastW = 0; measureCenters(); });
     measureCenters();
   }
 
@@ -251,8 +280,9 @@
     const src = (i) => `frames/${dir}/${String(i + 1).padStart(4, '0')}.webp`;
     const size = () => {
       const dpr = Math.min(devicePixelRatio || 1, 2);
-      canvas.width = Math.round(canvas.clientWidth * dpr);
-      canvas.height = Math.round(canvas.clientHeight * dpr);
+      const w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
+      if (w === canvas.width && h === canvas.height) return;
+      canvas.width = w; canvas.height = h;
       shown = -1; draw();
     };
     const nearest = (i) => {
@@ -281,9 +311,10 @@
       }
       scrolly.classList.add('is-ready');
     }
+    const stickyBox = $('.scrolly__sticky', scrolly);
     const progress = () => {
       const r = scrolly.getBoundingClientRect();
-      const run = r.height - innerHeight;
+      const run = r.height - stickyBox.offsetHeight;
       return Math.max(0, Math.min(1, -r.top / run));
     };
     const loop = () => {

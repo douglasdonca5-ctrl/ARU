@@ -252,14 +252,24 @@ ul, ol { list-style: none; padding: 0; }
 .centers.is-pinned {
   /* el ancho de tarjeta también se limita por la altura, para que todo quepa en pantalla */
   --cw: min(calc((100vw - var(--gutter) * 5) / 4), calc((100svh - var(--nav-h) - 230px) * 340 / 420));
+  /* --dist (recorrido horizontal) lo mide JS una vez por ancho; la altura no depende de la barra del navegador */
+  --hold: 12vh; --hold: 12svh;
+  height: calc(100vh + var(--dist, 0px) + 2 * var(--hold));
+  height: calc(100svh + var(--dist, 0px) + 2 * var(--hold));
   padding: 0;
+  view-timeline: --centers block;
 }
+/* Navegadores con animaciones ligadas al scroll: el desplazamiento lo calcula el propio navegador */
+.centers.is-sdt .carousel { animation: centers-x linear both; animation-timeline: --centers; animation-range: contain var(--hold) contain calc(var(--hold) + var(--dist, 0px)); }
+.centers.is-sdt .centers__progress span { animation: centers-bar linear both; animation-timeline: --centers; animation-range: contain var(--hold) contain calc(var(--hold) + var(--dist, 0px)); }
+@keyframes centers-x { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(-1 * var(--dist, 0px)), 0, 0); } }
+@keyframes centers-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .centers.is-pinned .centers__sticky {
   position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
   display: flex; flex-direction: column; justify-content: center;
   padding: calc(var(--nav-h) + 8px) 0 24px;
 }
-.centers.is-pinned .carousel { overflow: visible; width: max-content; scroll-snap-type: none; will-change: transform; }
+.centers.is-pinned .carousel { overflow: visible; width: max-content; scroll-snap-type: none; will-change: transform; touch-action: pan-y; }
 .centers.is-pinned .centers__progress { display: block; position: relative; height: 1px; margin: 28px var(--gutter) 0; background: var(--line); }
 .centers__progress span { position: absolute; inset: 0; background: var(--ink); transform-origin: left; transform: scaleX(0); }
 .ccard--img { overflow: hidden; background: var(--card); }
