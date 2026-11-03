@@ -27,7 +27,7 @@ window.EQUIPOS = {
     aplicadores: 'Cuatro puntas intercambiables: 12,5×14,5 mm, 13,5×28,5 mm, 13,5×38,5 mm y redonda de 8,25 mm.',
   },
   dpl: {
-    no: 'No. 02', name: 'Spectrum DPL Plus', cat: 'depilacion', img: 'img/eq-dpl.webp',
+    no: 'No. 02', name: 'Spectrum DPL Plus', cat: 'depilacion', img: 'img/eq-dpl.webp?v=2',
     tech: 'DPL · 420–1200 nm', techLong: 'Luz DPL · depilación + filtros de cuidado de la piel',
     desc: 'Plataforma DPL para depilación (560–950 nm) y cuidado de la piel con filtros (420–1200 nm), con lámpara importada de Alemania y técnica en movimiento.',
     ventajas: ['Adaptadores de spot de cambio rápido', 'Núcleo de luz importado de Alemania', 'Fuente de alimentación OPT', 'Varias longitudes de onda para todo tipo de pieles', 'Tecnología in-motion'],
@@ -54,7 +54,7 @@ window.EQUIPOS = {
     aplicadores: 'Piezas de mano de 650 nm (tinta verde) y 585 nm (tinta roja), colimada y celular.',
   },
   pico500: {
-    no: 'No. 04', name: 'Picosecond 500 ps', cat: 'laser', img: 'img/eq-pico500.webp',
+    no: 'No. 04', name: 'Picosecond 500 ps', cat: 'laser', img: 'img/eq-pico500.webp?v=2',
     tech: 'Picosegundo · 500 ps', techLong: 'Láser de picosegundos · 1064 / 532 nm · brazo coreano',
     desc: 'Láser de picosegundos con brazo de 7 articulaciones importado de Corea, para eliminación de tatuajes, cloasma (melasma) y tratamiento de «muñeca negra» (carbon peel).',
     ventajas: ['Pulso corto de 500 ps', 'Alta frecuencia: 1–10 Hz', 'Alta precisión: spot ajustable de 2 a 10 mm', 'Brazo de 7 articulaciones importado de Corea'],
