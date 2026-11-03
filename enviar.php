@@ -39,17 +39,24 @@ if (campo('web') !== '') {
     responder(true);
 }
 
-// demostracion: formulario de contacto · newsletter: pie · llamada: asistente («Prefiero que me llaméis»)
+// demostracion: formulario de contacto · newsletter: pie · asistente: chat de WhatsApp
 $tipo = campo('tipo', 20);
-if (!in_array($tipo, ['newsletter', 'demostracion', 'llamada'], true)) {
+if (!in_array($tipo, ['newsletter', 'demostracion', 'asistente'], true)) {
     $tipo = 'demostracion';
 }
+// Canal del asistente: whatsapp (abre WhatsApp con el mensaje), llamada o email
+$canal = $tipo === 'asistente' ? campo('canal', 20) : '';
+if ($tipo === 'asistente' && !in_array($canal, ['whatsapp', 'llamada', 'email'], true)) {
+    responder(false, 'Elige cómo quieres que te contactemos.', 422);
+}
 $email = campo('email', 160);
-// En la llamada el email es opcional: lo que hace falta es el teléfono
-if (($tipo !== 'llamada' || $email !== '') && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+$emailObligatorio = $tipo !== 'asistente' || $canal === 'email';
+if (($emailObligatorio || $email !== '') && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     responder(false, 'Introduce un email válido.', 422);
 }
-if (campo('privacidad', 5) === '') {
+// Por WhatsApp el visitante solo pide que le atendamos (medidas precontractuales):
+// no hay casilla; en llamada y email la casilla es obligatoria.
+if ($canal !== 'whatsapp' && campo('privacidad', 5) === '') {
     responder(false, 'Debes aceptar la política de privacidad.', 422);
 }
 
@@ -58,21 +65,27 @@ $datos = [
     'tipo' => $tipo,
     'email' => $email,
 ];
-if ($tipo === 'llamada') {
+if ($tipo === 'asistente') {
     $datos += [
+        'canal' => $canal,
+        'motivo' => campo('motivo', 40),
+        'equipo' => campo('equipo', 80),
+        'centro' => campo('centro', 80),
+        'experiencia' => campo('experiencia', 80),
+        'plazo' => campo('plazo', 80),
+        'financiacion' => campo('financiacion', 60),
+        'provincia' => campo('provincia', 80),
         'nombre' => campo('nombre', 120),
         'telefono' => campo('telefono', 40),
-        'motivo' => campo('motivo', 40),
-        'centro' => campo('centro', 160),
-        'provincia' => campo('provincia', 80),
-        'equipo' => campo('equipo', 80),
+        'franja' => campo('franja', 40),
         'mensaje' => campo('mensaje', 3000),
+        'base' => $canal === 'whatsapp' ? 'medidas precontractuales (art. 6.1.b RGPD)' : 'consentimiento',
     ];
-    $digitos = preg_replace('/\D/', '', $datos['telefono']) ?? '';
     if ($datos['nombre'] === '') {
         responder(false, 'Indica tu nombre.', 422);
     }
-    if (strlen($digitos) < 9 || strlen($digitos) > 15) {
+    $digitos = preg_replace('/\D/', '', $datos['telefono']) ?? '';
+    if (($canal === 'llamada' || $digitos !== '') && (strlen($digitos) < 9 || strlen($digitos) > 15)) {
         responder(false, 'Revisa el teléfono: debe tener al menos 9 cifras.', 422);
     }
 }
@@ -118,14 +131,46 @@ if (@file_put_contents($dir . '/' . $tipo . '.jsonl', $linea, FILE_APPEND | LOCK
 }
 
 if (DESTINO !== '') {
-    $asunto = [
-        'newsletter' => 'Aruesthetics · nueva suscripción',
-        'llamada' => 'Aruesthetics · quieren que les llaméis',
-        'demostracion' => 'Aruesthetics · solicitud de demostración',
-    ][$tipo];
-    $cuerpo = '';
-    foreach ($datos as $k => $v) {
-        $cuerpo .= ucfirst($k) . ': ' . $v . "\n";
+    if ($tipo === 'asistente') {
+        $prioridad = $datos['plazo'] === 'Lo antes posible' ? '[PRIORIDAD] ' : '';
+        $como = ['whatsapp' => 'por WhatsApp', 'llamada' => 'que le llaméis', 'email' => 'por email'][$canal];
+        $asunto = 'Aruesthetics · ' . $prioridad . ($datos['motivo'] ?: 'Consulta') . ($datos['equipo'] ? ' · ' . $datos['equipo'] : '')
+            . ' · ' . $datos['nombre'] . ' (' . $como . ')';
+        $filas = [
+            'Qué pide' => $datos['motivo'],
+            'Equipo' => $datos['equipo'],
+            'Tipo de centro' => $datos['centro'],
+            'Equipos que ya tiene' => $datos['experiencia'],
+            'Plazo' => $datos['plazo'],
+            'Financiación o renting' => $datos['financiacion'],
+            'Provincia' => $datos['provincia'],
+            'Nombre' => $datos['nombre'],
+            'Contacto preferido' => ucfirst($como),
+            'Teléfono' => $datos['telefono'],
+            'Mejor hora para llamar' => $datos['franja'],
+            'Email' => $email,
+        ];
+        $cuerpo = "Nuevo contacto desde el asistente de aruesthetics.es\n\n";
+        foreach ($filas as $k => $v) {
+            if ($v !== '') {
+                $cuerpo .= $k . ': ' . $v . "\n";
+            }
+        }
+        if ($canal === 'whatsapp') {
+            $cuerpo .= "\nHa abierto WhatsApp con este mensaje preparado. Si no os llega, no tenemos su teléfono:\n";
+        } else {
+            $cuerpo .= "\nMensaje preparado:\n";
+        }
+        $cuerpo .= $datos['mensaje'] . "\n";
+    } else {
+        $asunto = [
+            'newsletter' => 'Aruesthetics · nueva suscripción',
+            'demostracion' => 'Aruesthetics · solicitud de demostración',
+        ][$tipo];
+        $cuerpo = '';
+        foreach ($datos as $k => $v) {
+            $cuerpo .= ucfirst($k) . ': ' . $v . "\n";
+        }
     }
     $cabeceras = ['From: Aruesthetics <' . REMITENTE . '>', 'Content-Type: text/plain; charset=utf-8'];
     if ($email !== '') {

@@ -45,7 +45,7 @@
       <span class="chat__avatar">${LOGO}</span>
       <div class="chat__who">
         <h2 class="chat__t" id="chat-t">Aruesthetics</h2>
-        <p class="chat__s">Asistente · te atendemos por WhatsApp</p>
+        <p class="chat__s">Asistente · L–V, 9–14&nbsp;h y 15–19&nbsp;h</p>
       </div>
       <button type="button" class="chat__close" aria-label="Cerrar el asistente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
     </div>
@@ -119,6 +119,38 @@
     field.focus({ preventScroll: true });
   });
 
+  /* ---------- Horario de atención (lunes a viernes, 9–14 y 15–19, hora de Madrid) ---------- */
+  const HORARIO = 'de lunes a viernes, de 9:00 a 14:00 y de 15:00 a 19:00';
+  const madrid = () => {
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+      .formatToParts(new Date()).map((x) => [x.type, x.value]));
+    return { d: { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }[p.weekday], m: +p.hour * 60 + +p.minute };
+  };
+  const abierto = () => { const { d, m } = madrid(); return d <= 5 && ((m >= 540 && m < 840) || (m >= 900 && m < 1140)); };
+  const diaSiguiente = () => { const { d, m } = madrid(); return d <= 5 && m < 1140 ? 'hoy' : d <= 4 ? 'mañana' : 'el lunes'; };
+  const proximo = () => {
+    const { d, m } = madrid();
+    if (d <= 5 && m < 540) return 'hoy a partir de las 9:00';
+    if (d <= 5 && m >= 840 && m < 900) return 'hoy a partir de las 15:00';
+    return d <= 4 ? 'mañana a partir de las 9:00' : 'el lunes a partir de las 9:00';
+  };
+
+  /* ---------- Opciones ---------- */
+  const MOTIVOS = { presupuesto: 'Presupuesto', demo: 'Demostración', otra: 'Consulta' };
+  const EXPERIENCIA = [['primero', 'No, sería el primero', 'Sería nuestro primer equipo de este tipo.'], ['ampliar', 'Sí, y queremos ampliar', 'Ya trabajamos con equipos de este tipo y queremos ampliar.'], ['renovar', 'Sí, y queremos renovarlo', 'Queremos renovar el equipo que tenemos.']];
+  const PLAZOS = [['ya', 'Lo antes posible', 'Lo necesitaría lo antes posible.'], ['pronto', 'En 1–3 meses', 'Lo necesitaría en los próximos 1–3 meses.'], ['info', 'Más adelante, me estoy informando', '']];
+  const FRANJAS = [['manana', 'Por la mañana (9–14 h)', ' por la mañana'], ['tarde', 'Por la tarde (15–19 h)', ' por la tarde'], ['igual', 'Me da igual', '']];
+  const de = (lista, k, i = 1) => (lista.find((x) => x[0] === k) || [])[i] || '';
+  const okTel = (v) => { const d = v.replace(/\D/g, ''); return d.length < 9 || d.length > 15 ? 'Revisa el teléfono: debe tener al menos 9 cifras.' : ''; };
+  const okEmail = (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Revisa el email, por ejemplo nombre@centro.es.');
+
+  // Ficha mínima del equipo dentro de la conversación
+  const tarjeta = (id) => {
+    const e = EQ[id]; if (!e) return '';
+    return `<span class="msg__eq"><img src="${e.img}" alt="" width="56" height="70" loading="lazy"><span><strong>${esc(e.name)}</strong><span>${esc(e.techLong || e.tech)}</span></span></span>`
+      + `<span class="msg__list">${e.ventajas.slice(0, 2).map((v) => `<span>${esc(v)}</span>`).join('')}</span>`;
+  };
+
   /* ---------- Mensaje para WhatsApp ---------- */
   const mensaje = () => {
     const centro = CENTROS.find((c) => c[0] === s.centro);
@@ -128,8 +160,58 @@
       presupuesto: equipo ? `Me gustaría recibir un presupuesto ${equipo}.` : 'Me gustaría recibir un presupuesto y que me asesoréis sobre qué equipo me conviene.',
       demo: equipo ? `Me gustaría organizar una demostración ${equipo} en mi centro.` : 'Me gustaría organizar una demostración en mi centro y que me asesoréis sobre qué equipo me conviene.',
     }[s.motivo] || s.texto || '';
-    return `Hola, Aruesthetics. ${quien}\n${pide}\n(Desde aruesthetics.es)`;
+    const lineas = [`Hola, Aruesthetics. ${quien}`, pide];
+    if (s.experiencia && s.centro !== 'nuevo') lineas.push(de(EXPERIENCIA, s.experiencia, 2));
+    if (s.plazo) lineas.push(de(PLAZOS, s.plazo, 2));
+    if (s.financiacion === 'si') lineas.push('Me interesa información sobre financiación o renting.');
+    lineas.push('(Desde aruesthetics.es)');
+    return lineas.filter(Boolean).join('\n');
   };
+
+  /* ---------- Guardar el contacto ---------- */
+  const datosContacto = (canal) => {
+    const fd = new FormData();
+    Object.entries({
+      tipo: 'asistente', canal, web: '', privacidad: canal === 'whatsapp' ? '' : 'on',
+      motivo: MOTIVOS[s.motivo] || '', equipo: s.equipo ? EQ[s.equipo].name : (s.cat ? CATS[s.cat] : ''),
+      centro: de(CENTROS, s.centro), experiencia: de(EXPERIENCIA, s.experiencia), plazo: de(PLAZOS, s.plazo),
+      financiacion: { si: 'Sí, quiere información', no: 'No' }[s.financiacion] || '',
+      provincia: s.provincia || '', nombre: s.nombre || '', telefono: s.telefono || '', franja: de(FRANJAS, s.franja), email: s.email || '',
+      mensaje: mensaje(),
+    }).forEach(([k, v]) => fd.append(k, v));
+    return fd;
+  };
+  // Al abrir WhatsApp la página puede quedar en segundo plano: sendBeacon llega igualmente
+  const avisarWhatsApp = () => {
+    const fd = datosContacto('whatsapp');
+    if (!(navigator.sendBeacon && navigator.sendBeacon('enviar.php', fd))) fetch('enviar.php', { method: 'POST', body: fd, keepalive: true }).catch(() => {});
+  };
+  const enviarContacto = async (canal) => {
+    try {
+      const r = await fetch('enviar.php', { method: 'POST', body: datosContacto(canal), headers: { Accept: 'application/json' } });
+      const j = await r.json().catch(() => ({}));
+      return { ok: r.ok && j.ok, error: j.error || '' };
+    } catch { return { ok: false, error: '' }; }
+  };
+  const consentir = (label) => new Promise((res) => {
+    inputBox.hidden = false;
+    inputBox.innerHTML = `
+      <form class="chat__consent" novalidate>
+        <label class="check"><input type="checkbox" id="chat-ok"> <span>Acepto la <button type="button" class="linklike u" data-chat-privacy>política de privacidad</button>.</span></label>
+        <button type="submit" class="btn btn--ink chat__submit">${label}</button>
+      </form>
+      <p class="chat__err" role="alert"></p>`;
+    const f = inputBox.querySelector('form'), ok = inputBox.querySelector('#chat-ok'), err = inputBox.querySelector('.chat__err');
+    ok.focus({ preventScroll: true });
+    f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!ok.checked) { err.textContent = 'Marca la casilla para poder enviarla.'; ok.focus(); return; }
+      const btn = f.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Enviando…';
+      res(() => { inputBox.hidden = true; inputBox.innerHTML = ''; });
+    });
+  });
+  const otraVez = async () => { const v = await choices([['otra', 'Hacer otra consulta']]); if (v) flujo(); };
 
   /* ---------- Conversación ---------- */
   async function flujo(pre = {}) {
@@ -138,7 +220,7 @@
     s = { ...pre };
     const eq = s.equipo && EQ[s.equipo];
     if (eq) {
-      await bot(`Hola. Veo que te interesa el <strong>${esc(eq.name)}</strong>. ¿Qué necesitas?`);
+      await bot(`Hola. Veo que te interesa el <strong>${esc(eq.name)}</strong>:${tarjeta(s.equipo)}¿Qué necesitas?`);
       s.motivo = await choices([['presupuesto', 'Un presupuesto'], ['demo', 'Una demostración en mi centro'], ['otra', 'Tengo otra consulta']]);
     } else {
       await bot('Hola, soy el asistente de Aruesthetics. ¿En qué te podemos ayudar?');
@@ -154,7 +236,7 @@
     }
 
     if (s.motivo === 'otra') {
-      await bot('Cuéntanos tu consulta y te respondemos por WhatsApp.');
+      await bot('Cuéntanos tu consulta.');
       s.texto = await ask({ label: 'Tu consulta', placeholder: 'Escribe tu consulta…', multiline: true });
     } else {
       if (!s.equipo) {
@@ -169,29 +251,42 @@
             const e = await choices([...ids.map((id) => [id, EQ[id].name]), ['varios', 'Me interesan varios']]);
             if (e !== 'varios') s.equipo = e;
           }
+          if (s.equipo) await bot(`Buena elección. Esto es lo principal:${tarjeta(s.equipo)}`);
         }
       }
       await bot('¿Qué tipo de centro tienes?');
       s.centro = await choices(CENTROS.map(([k, label]) => [k, label]));
+      if (s.centro !== 'nuevo') {
+        await bot('¿Ya trabajáis con algún equipo de este tipo?');
+        s.experiencia = await choices(EXPERIENCIA.map(([k, l]) => [k, l]));
+      }
+      await bot(s.motivo === 'demo' ? '¿Para cuándo te gustaría tenerlo funcionando en tu centro?' : '¿Para cuándo lo necesitarías?');
+      s.plazo = await choices(PLAZOS.map(([k, l]) => [k, l]));
+      await bot('Ofrecemos financiación y renting para los equipos. ¿Quieres que te informemos?');
+      s.financiacion = await choices([['si', 'Sí, me interesa'], ['no', 'No, gracias']]);
       await bot(s.motivo === 'demo' ? '¿En qué provincia está tu centro? Así organizamos la demostración.' : '¿En qué provincia estás?');
       s.provincia = await ask({ label: 'Provincia', placeholder: 'Por ejemplo, Madrid', autocomplete: 'address-level1', optional: true });
     }
 
     await bot('¿Cómo te llamas?');
     s.nombre = await ask({ label: 'Tu nombre', placeholder: 'Nombre', autocomplete: 'given-name' });
-    await resumen();
+    await bot(`Gracias, ${esc(s.nombre)}. ¿Cómo prefieres que te contactemos?`);
+    s.canal = await choices([['whatsapp', 'Por WhatsApp'], ['llamada', 'Que me llaméis'], ['email', 'Por email']]);
+    if (s.canal === 'llamada') return porLlamada();
+    if (s.canal === 'email') return porEmail();
+    return porWhatsApp();
   }
 
-  async function resumen() {
+  async function porWhatsApp() {
     const t = run, texto = mensaje(), url = waUrl(texto);
-    await bot(`Gracias, ${esc(s.nombre)}. Te hemos preparado el mensaje:`);
+    await bot('Te hemos preparado el mensaje:');
     if (t !== run) return;
     say(`<p class="msg__label">Mensaje para WhatsApp</p><p>${esc(texto).replace(/\n/g, '<br>')}</p>`, 'bot', 'msg--preview');
     const box = document.createElement('div');
     box.className = 'chat__chips';
     box.innerHTML = `
       <a class="chat__chip chat__chip--wa" href="${url}" target="_blank" rel="noopener">${ICONO_WA}<span>Enviar por WhatsApp</span></a>
-      <button type="button" class="chat__chip" data-v="llamada">Prefiero que me llaméis</button>
+      <button type="button" class="chat__chip" data-v="llamada">Mejor que me llaméis</button>
       <button type="button" class="chat__chip chat__chip--link" data-v="otra">Empezar de nuevo</button>`;
     log.append(box); bajar();
     box.querySelector('a').focus({ preventScroll: true });
@@ -199,13 +294,15 @@
       const a = e.target.closest('a, button'); if (!a) return;
       box.remove();
       if (a.tagName === 'A') {
+        avisarWhatsApp();
         say('Enviar por WhatsApp', 'me');
-        await bot(`Hemos abierto WhatsApp con tu mensaje: solo tienes que pulsar <strong>Enviar</strong>. Si no se ha abierto, <a href="${url}" target="_blank" rel="noopener">pulsa aquí</a>.`);
-        const v = await choices([['otra', 'Hacer otra consulta']]);
-        if (v) flujo();
+        const cuando = abierto() ? 'Estamos en horario de atención, así que te contestamos pronto.' : `Ahora estamos fuera de horario: te contestamos ${proximo()}.`;
+        await bot(`Hemos abierto WhatsApp con tu mensaje: solo tienes que pulsar <strong>Enviar</strong>. ${cuando}<br>Si no se ha abierto, <a href="${url}" target="_blank" rel="noopener">pulsa aquí</a>.`);
+        otraVez();
       } else if (a.dataset.v === 'llamada') {
-        say('Prefiero que me llaméis', 'me');
-        llamada(texto);
+        say('Mejor que me llaméis', 'me');
+        s.canal = 'llamada';
+        porLlamada();
       } else {
         say('Empezar de nuevo', 'me');
         flujo();
@@ -213,52 +310,38 @@
     });
   }
 
-  async function llamada(texto) {
+  async function porLlamada() {
     await bot('¿A qué teléfono te llamamos?');
-    s.telefono = await ask({
-      label: 'Teléfono', placeholder: '600 000 000', type: 'tel', autocomplete: 'tel',
-      check: (v) => { const d = v.replace(/\D/g, ''); return d.length < 9 || d.length > 15 ? 'Revisa el teléfono: debe tener al menos 9 cifras.' : ''; },
-    });
+    s.telefono = await ask({ label: 'Teléfono', placeholder: '600 000 000', type: 'tel', autocomplete: 'tel', check: okTel });
+    await bot(`¿Cuándo te viene mejor? Llamamos ${HORARIO}.`);
+    s.franja = await choices(FRANJAS.map(([k, l]) => [k, l]));
     await bot('Para guardar tu solicitud necesitamos tu permiso.');
-    const t = run;
-    await new Promise((res) => {
-      inputBox.hidden = false;
-      inputBox.innerHTML = `
-        <form class="chat__consent" novalidate>
-          <label class="check"><input type="checkbox" id="chat-ok"> <span>Acepto la <button type="button" class="linklike u" data-chat-privacy>política de privacidad</button>.</span></label>
-          <button type="submit" class="btn btn--ink chat__submit">Enviar solicitud</button>
-        </form>
-        <p class="chat__err" role="alert"></p>`;
-      const f = inputBox.querySelector('form'), ok = inputBox.querySelector('#chat-ok'), err = inputBox.querySelector('.chat__err');
-      ok.focus({ preventScroll: true });
-      f.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (!ok.checked) { err.textContent = 'Marca la casilla para poder enviarla.'; ok.focus(); return; }
-        const btn = f.querySelector('button[type="submit"]');
-        btn.disabled = true; btn.textContent = 'Enviando…';
-        const fd = new FormData();
-        const centro = CENTROS.find((c) => c[0] === s.centro);
-        Object.entries({
-          tipo: 'llamada', web: '', privacidad: 'on', nombre: s.nombre, telefono: s.telefono,
-          motivo: { presupuesto: 'Presupuesto', demo: 'Demostración', otra: 'Consulta' }[s.motivo] || '',
-          centro: centro ? centro[1] : '', provincia: s.provincia || '', equipo: s.equipo ? EQ[s.equipo].name : (s.cat ? CATS[s.cat] : ''),
-          mensaje: texto,
-        }).forEach(([k, v]) => fd.append(k, v));
-        let okEnvio = false, error = '';
-        try {
-          const r = await fetch('enviar.php', { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
-          const j = await r.json().catch(() => ({}));
-          okEnvio = r.ok && j.ok; error = j.error || '';
-        } catch { /* sin conexión */ }
-        if (t !== run) return;
-        inputBox.hidden = true; inputBox.innerHTML = '';
-        if (okEnvio) await bot(`Recibido, ${esc(s.nombre)}. Te llamaremos lo antes posible al ${esc(s.telefono)}.`);
-        else await bot(`${error ? esc(error) : 'No hemos podido guardar tu solicitud.'} Si lo prefieres, <a href="${waUrl(texto)}" target="_blank" rel="noopener">escríbenos por WhatsApp</a>.`);
-        res();
-      });
-    });
-    const v = await choices([['otra', 'Hacer otra consulta']]);
-    if (v) flujo();
+    const t = run, listo = await consentir('Enviar solicitud');
+    const r = await enviarContacto('llamada');
+    if (t !== run) return;
+    listo();
+    const fr = de(FRANJAS, s.franja, 2);
+    if (r.ok) await bot(abierto()
+      ? `Recibido, ${esc(s.nombre)}. Te llamaremos${fr || ' lo antes posible'} al ${esc(s.telefono)}.`
+      : `Recibido, ${esc(s.nombre)}. Ahora estamos fuera de horario: te llamaremos al ${esc(s.telefono)} ${diaSiguiente()}${fr}.`);
+    else await bot(`${r.error ? esc(r.error) : 'No hemos podido guardar tu solicitud.'} Si lo prefieres, <a href="${waUrl(mensaje())}" target="_blank" rel="noopener">escríbenos por WhatsApp</a>.`);
+    otraVez();
+  }
+
+  async function porEmail() {
+    await bot('¿A qué email te escribimos?');
+    s.email = await ask({ label: 'Email', placeholder: 'nombre@centro.es', type: 'email', autocomplete: 'email', check: okEmail });
+    await bot('¿Nos dejas también un teléfono, por si hay que aclarar algo?');
+    s.telefono = await ask({ label: 'Teléfono (opcional)', placeholder: '600 000 000', type: 'tel', autocomplete: 'tel', optional: true, check: okTel });
+    await bot('Para guardar tu solicitud necesitamos tu permiso.');
+    const t = run, listo = await consentir('Enviar solicitud');
+    const r = await enviarContacto('email');
+    if (t !== run) return;
+    listo();
+    const que = s.motivo === 'presupuesto' ? 'con el presupuesto' : s.motivo === 'demo' ? 'para organizar la demostración' : 'con la respuesta';
+    if (r.ok) await bot(`Recibido, ${esc(s.nombre)}. Te escribimos a <strong>${esc(s.email)}</strong> ${que}${abierto() ? ' lo antes posible' : `, ${proximo()}`}.`);
+    else await bot(`${r.error ? esc(r.error) : 'No hemos podido guardar tu solicitud.'} Si lo prefieres, <a href="${waUrl(mensaje())}" target="_blank" rel="noopener">escríbenos por WhatsApp</a>.`);
+    otraVez();
   }
 
   /* ---------- Abrir y cerrar ---------- */
