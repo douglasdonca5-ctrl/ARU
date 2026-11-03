@@ -1,6 +1,14 @@
 Options -Indexes
 DirectoryIndex index.html
 
+# El repositorio de GitHub se publica tal cual en public_html (despliegue automático
+# de la Hostinger): los ficheros del repositorio que no son de la web no se sirven.
+RedirectMatch 404 ^/\.git
+RedirectMatch 404 ^/src/
+<FilesMatch "^(README\.md|\.gitignore|\.htaccess)$">
+  Require all denied
+</FilesMatch>
+
 # HTTPS: lo fuerza la Hostinger (ajuste «Force HTTPS» del sitio) cuando el certificado
 # está activo; forzarlo aquí antes de tener certificado deja la web inaccesible.
 

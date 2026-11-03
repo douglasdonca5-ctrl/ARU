@@ -1,14 +1,24 @@
 # Aruesthetics — web
 
-Web estática de Aruesthetics (maquinaria láser para centros estéticos). Español de España, sin precios.
+Web estática de Aruesthetics (aparatología estética profesional para centros). Español de España, sin precios.
 
-- `site/` — lo que se publica: `index.html`, `css/`, `js/`, `img/`, `video/`, `frames/`, `fonts/`, `enviar.php`.
-- **Equipos**: los 13 del catálogo del fabricante «2025 new product catalog» (SANHE). Datos en `site/js/equipos.js` (solo lo que figura en el catálogo, sin promesas de resultados ni certificados). Fotos: recortes originales del PDF compuestos sobre el fondo de estudio (`src/catalogo/`, no versionado), en `site/img/eq-*.webp`. Son de baja resolución (~280×540 px): conviene pedir al fabricante las fotos en alta.
-- Imágenes de ambiente y vídeos generados con Higgsfield (GPT Image 2.5 y Kling 3.0); los originales quedan en `src/` (no versionados).
-- **Vídeo scroll** (`#tratamiento`): secuencia de 151 fotogramas en `site/frames/d` (escritorio, 1600 px) y `site/frames/m` (móvil, recorte 3:4) dibujada en un canvas según el scroll. `data-frames` en el `<section>` debe coincidir con el número de fotogramas.
+## Publicación
+
+La raíz de este repositorio **es** la web. La Hostinger tiene activado el despliegue automático
+desde GitHub (rama `main` → raíz de `public_html` de aruesthetics.es): **cada `git push` a `main`
+publica la web**. Por eso los ficheros de la web van en la raíz y no en una subcarpeta.
+
+- `index.html`, `css/`, `js/`, `img/`, `video/`, `frames/`, `fonts/`, `enviar.php`, `robots.txt`, `sitemap.xml`.
+- `README.md`, `.gitignore` y `.git` quedan bloqueados por el `.htaccess`.
+- `src/` (originales de imágenes y vídeos) no se versiona.
+
+## Contenido
+
+- **Equipos**: los 13 del catálogo del fabricante «2025 new product catalog» (SANHE). Datos en `js/equipos.js` (solo lo que figura en el catálogo, sin promesas de resultados ni certificados). Fotos en `img/eq-*.webp`: Spectrum DPL Plus y Picosecond 500 ps vienen de la web de SANHE; el resto son recortes del PDF (baja resolución, conviene pedir al fabricante las fotos en alta).
+- Imágenes de ambiente y vídeos generados con Higgsfield (GPT Image 2.5 y Kling 3.0).
+- **Vídeo scroll** (`#tratamiento`): 151 fotogramas en `frames/d` (escritorio) y `frames/m` (móvil, recorte 3:4) dibujados en un canvas según el scroll. `data-frames` en el `<section>` debe coincidir con el número de fotogramas.
 - **Formularios**: `enviar.php` guarda los envíos en `../aruesthetics-datos/*.jsonl` (fuera de `public_html`). Para recibir avisos por email, rellenar `DESTINO` en `enviar.php`.
-- **Publicación**: dominio definitivo **https://aruesthetics.es** (Hostinger, cuenta u861290346). Se sube con la API de Hostinger: zip del *contenido* de `site/` → «deploy static website» (sustituye `public_html`). El FTP de la cuenta usa un certificado `*.hstgr.io` que no coincide con la IP, así que no se usa.
-- **HTTPS**: lo fuerza la Hostinger («Force HTTPS») una vez el certificado está activo; el `.htaccess` no redirige.
-- **Buscadores**: indexable (`robots.txt` + `sitemap.xml` + canonical). La copia en el dominio temporal `cornflowerblue-goose-885481.hostingersite.com` conserva `noindex`.
+- **HTTPS**: lo fuerza la Hostinger («Force HTTPS»); el `.htaccess` no redirige.
+- **Buscadores**: indexable (`robots.txt` + `sitemap.xml` + canonical).
 
-Previsualizar en local: `python3 -m http.server 8791 --directory site` (el formulario necesita PHP, solo funciona en el servidor).
+Previsualizar en local: `python3 -m http.server 8790` en esta carpeta (el formulario necesita PHP, solo funciona en el servidor).
