@@ -13,7 +13,7 @@ window.CATEGORIAS = {
 
 window.EQUIPOS = {
   hidl: {
-    no: 'No. 01', name: 'HIDL-3000', cat: 'depilacion', img: 'img/eq-hidl.webp',
+    no: 'No. 01', name: 'HIDL-3000', cat: 'depilacion', img: 'img/eq-hidl.webp?v=3',
     tech: 'Diodo · 755/808/1064 nm', techLong: 'Láser de diodo · 755 + 808 + 1064 nm',
     desc: 'Láser de diodo con tres longitudes de onda en un mismo equipo para depilación en todas las zonas, con sistema Android, análisis del vello y refrigeración por contacto de 360°.',
     ventajas: ['Tecnología de colimación FAC (eje rápido)', 'Sistema Android con gestión de clientes (CRM)', 'Sistema de análisis del vello', 'Refrigeración por contacto de 360°'],
@@ -27,7 +27,7 @@ window.EQUIPOS = {
     aplicadores: 'Cuatro puntas intercambiables: 12,5×14,5 mm, 13,5×28,5 mm, 13,5×38,5 mm y redonda de 8,25 mm.',
   },
   dpl: {
-    no: 'No. 02', name: 'Spectrum DPL Plus', cat: 'depilacion', img: 'img/eq-dpl.webp?v=2',
+    no: 'No. 02', name: 'Spectrum DPL Plus', cat: 'depilacion', img: 'img/eq-dpl.webp?v=3',
     tech: 'DPL · 420–1200 nm', techLong: 'Luz DPL · depilación + filtros de cuidado de la piel',
     desc: 'Plataforma DPL para depilación (560–950 nm) y cuidado de la piel con filtros (420–1200 nm), con lámpara importada de Alemania y técnica en movimiento.',
     ventajas: ['Adaptadores de spot de cambio rápido', 'Núcleo de luz importado de Alemania', 'Fuente de alimentación OPT', 'Varias longitudes de onda para todo tipo de pieles', 'Tecnología in-motion'],
@@ -40,7 +40,7 @@ window.EQUIPOS = {
     aplicadores: 'Pieza de mano DPL con nueve filtros intercambiables.',
   },
   pico3: {
-    no: 'No. 03', name: 'Pico 3 en 1', cat: 'laser', img: 'img/eq-pico3.webp',
+    no: 'No. 03', name: 'Pico 3 en 1', cat: 'laser', img: 'img/eq-pico3.webp?v=3',
     tech: 'Nd:YAG · 3 modos', techLong: 'Picosegundo + pulso largo + Genesis · 1064 / 532 nm',
     desc: 'Tres modos en un mismo equipo Nd:YAG: picosegundo para tatuajes y pigmento, pulso largo para depilación y lesiones vasculares, y Genesis para el rejuvenecimiento de la piel.',
     ventajas: ['Depilación', 'Lesiones vasculares', 'Rejuvenecimiento de la piel', 'Eliminación de tatuajes', 'Doble sistema de refrigeración'],
@@ -54,7 +54,7 @@ window.EQUIPOS = {
     aplicadores: 'Piezas de mano de 650 nm (tinta verde) y 585 nm (tinta roja), colimada y celular.',
   },
   pico500: {
-    no: 'No. 04', name: 'Picosecond 500 ps', cat: 'laser', img: 'img/eq-pico500.webp?v=2',
+    no: 'No. 04', name: 'Picosecond 500 ps', cat: 'laser', img: 'img/eq-pico500.webp?v=3',
     tech: 'Picosegundo · 500 ps', techLong: 'Láser de picosegundos · 1064 / 532 nm · brazo coreano',
     desc: 'Láser de picosegundos con brazo de 7 articulaciones importado de Corea, para eliminación de tatuajes, cloasma (melasma) y tratamiento de «muñeca negra» (carbon peel).',
     ventajas: ['Pulso corto de 500 ps', 'Alta frecuencia: 1–10 Hz', 'Alta precisión: spot ajustable de 2 a 10 mm', 'Brazo de 7 articulaciones importado de Corea'],
@@ -67,7 +67,7 @@ window.EQUIPOS = {
     aplicadores: 'Piezas de mano de 650 nm y 585 nm, focal (1064 y 532 nm), celular y fraccional.',
   },
   co2: {
-    no: 'No. 05', name: 'CO₂ Fraccional Metal RF', cat: 'laser', img: 'img/eq-co2.webp',
+    no: 'No. 05', name: 'CO₂ Fraccional Metal RF', cat: 'laser', img: 'img/eq-co2.webp?v=3',
     tech: 'CO₂ · 10,6 µm', techLong: 'Láser de CO₂ fraccional · tubo metálico de RF · 40 W',
     desc: 'Láser de CO₂ fraccional con tubo metálico de radiofrecuencia para rejuvenecimiento de la piel, con modos continuo, fraccional y ultra, y cabezales para tratamiento ginecológico.',
     ventajas: ['Alta potencia: 40 W', 'Modo continuo (CW)', 'Modo fraccional', 'Modo ultra'],
@@ -80,7 +80,7 @@ window.EQUIPOS = {
     aplicadores: 'Cabezal de corte, cabezal fraccional, piezas de 50 y 100 mm, cabezal vaginal y endoscopio digital.',
   },
   erbio: {
-    no: 'No. 06', name: 'Er:YAG 2940', cat: 'laser', img: 'img/eq-erbio.webp',
+    no: 'No. 06', name: 'Er:YAG 2940', cat: 'laser', img: 'img/eq-erbio.webp?v=3',
     tech: 'Er:YAG · 2940 nm', techLong: 'Láser de erbio:YAG · 2940 nm',
     desc: 'Láser de erbio para resurfacing de la piel, ligero o completo, y tratamiento de lesiones epidérmicas, dérmicas y pigmentadas benignas.',
     ventajas: ['Resurfacing ligero o completo', 'Lesiones epidérmicas y dérmicas', 'Lesiones pigmentadas benignas'],
@@ -91,7 +91,7 @@ window.EQUIPOS = {
     aplicadores: 'Piezas de mano R11 (2–3 mm), R12 (4–5 mm) y R13 (6–7 mm); pieza fraccional opcional.',
   },
   tulio: {
-    no: 'No. 07', name: 'Thulium 1927', cat: 'laser', img: 'img/eq-tulio.webp', tag: 'Nuevo',
+    no: 'No. 07', name: 'Thulium 1927', cat: 'laser', img: 'img/eq-tulio.webp?v=3', tag: 'Nuevo',
     tech: 'Tulio · 1927 nm', techLong: 'Láser de tulio · 1927 nm',
     desc: 'Láser de tulio de 1927 nm, ablativo y no ablativo, indicado para luminosidad y unificación del tono, melasma, arrugas finas, poros dilatados y textura de la piel.',
     ventajas: ['Fibra de tulio de larga duración y sin consumibles: bajo coste de mantenimiento', 'Funciones ablativa y no ablativa', 'Puntas de distintos tamaños y rodillos que ayudan a absorber el producto tras crear las zonas microtérmicas (MTZ)'],
@@ -103,7 +103,7 @@ window.EQUIPOS = {
     aplicadores: 'Pieza fraccional con puntas de 6×6, 12×12 y 20×20 mm, rodillo y pieza vaginal.',
   },
   patrixr: {
-    no: 'No. 08', name: 'PatrixR', cat: 'rf', img: 'img/eq-patrixr.webp',
+    no: 'No. 08', name: 'PatrixR', cat: 'rf', img: 'img/eq-patrixr.webp?v=3',
     tech: 'RF · 2 MHz', techLong: 'Radiofrecuencia multidimensional con microagujas · 2 MHz',
     desc: 'Equipo de radiofrecuencia multidimensional: varias profundidades y niveles de energía en una sola pasada, con control de impedancia y reconocimiento automático de puntas.',
     ventajas: ['Varias profundidades y energías en una sola pasada', 'Monitorización inteligente de la impedancia', 'Reconocimiento automático de puntas', 'Sistema Android'],
@@ -115,7 +115,7 @@ window.EQUIPOS = {
     aplicadores: 'PatrixR (resurfacing), FractionalR (corrección de la piel) e IceR (mantenimiento de la piel).',
   },
   pinxel: {
-    no: 'No. 09', name: 'Pinxel-V', cat: 'rf', img: 'img/eq-pinxel.webp',
+    no: 'No. 09', name: 'Pinxel-V', cat: 'rf', img: 'img/eq-pinxel.webp?v=3',
     tech: 'Microagujas RF', techLong: 'Microagujas con radiofrecuencia · 2 MHz',
     desc: 'Microagujas con radiofrecuencia monopolar y bipolar, con profundidad ajustable de 0,4 a 4 mm y vacío automático, que ayuda a que los activos lleguen a la dermis.',
     ventajas: ['Sistema Android con gestión de clientes (CRM)', 'Monopolar y bipolar', 'Agujas ajustables de 0,4 a 4 mm', 'Puntas aisladas y no aisladas', 'Sistema de vacío automático'],
@@ -128,8 +128,8 @@ window.EQUIPOS = {
     aplicadores: 'Aplicador de microagujas RF, aplicador fraccional RF, mango negativo (para monopolar) y mango de frío.',
   },
   magshape: {
-    no: 'No. 10', name: 'HI-EMT Magshape', cat: 'corporal', img: 'img/eq-magshape.webp',
-    extra: { img: 'img/eq-magshape-silla.webp', label: 'Silla Magshape (2 en 1)' },
+    no: 'No. 10', name: 'HI-EMT Magshape', cat: 'corporal', img: 'img/eq-magshape.webp?v=3',
+    extra: { img: 'img/eq-magshape-silla.webp?v=3', label: 'Silla Magshape (2 en 1)' },
     tech: 'HI-EMT + RF', techLong: 'Campo electromagnético de alta intensidad + radiofrecuencia · hasta 7 T',
     desc: 'Equipo HI-EMT con radiofrecuencia para tonificar el músculo y trabajar la grasa en la misma sesión, sin anestesia ni cirugía. Se combina con la silla Magshape para suelo pélvico.',
     ventajas: ['Sin anestesia ni cirugía', 'Trabaja músculo y grasa en la misma sesión', 'Tres modos: deportivo, suave y profesional', '4 aplicadores'],
@@ -141,7 +141,7 @@ window.EQUIPOS = {
     aplicadores: 'Abdomen, glúteos y muslos · muslos, brazos y piernas · silla para suelo pélvico (urología, ginecología y recuperación posparto).',
   },
   megashape: {
-    no: 'No. 11', name: 'Megashape Pro', cat: 'corporal', img: 'img/eq-megashape.webp', tag: 'Nuevo',
+    no: 'No. 11', name: 'Megashape Pro', cat: 'corporal', img: 'img/eq-megashape.webp?v=3', tag: 'Nuevo',
     tech: 'Vacío · RF · cavitación', techLong: 'Vacío + radiofrecuencia + cavitación + 940 nm',
     desc: 'Plataforma corporal que combina vacío con rodillos, radiofrecuencia multipolar y bipolar, cavitación y luz infrarroja de 940 nm para trabajar el contorno.',
     ventajas: ['Presión negativa (vacío)', 'Estimulación mecánica con rodillos', 'Lifting por radiofrecuencia', 'Cavitación para la reducción de grasa', 'Luz infrarroja de 940 nm que activa el metabolismo'],
@@ -153,7 +153,7 @@ window.EQUIPOS = {
     aplicadores: 'Rodillo de vacío, RF multipolar, RF bipolar y cavitación.',
   },
   cryo: {
-    no: 'No. 12', name: 'Cryocool 360°', cat: 'corporal', img: 'img/eq-cryo.webp',
+    no: 'No. 12', name: 'Cryocool 360°', cat: 'corporal', img: 'img/eq-cryo.webp?v=3',
     tech: 'Criolipólisis · −12 °C', techLong: 'Criolipólisis 360° · cinco aplicadores',
     desc: 'Criolipólisis de 360° con cinco aplicadores de distintos tamaños, silicona de grado médico y pantalla orientable.',
     ventajas: ['5 aplicadores', 'Pantalla táctil intuitiva', 'Superenfriamiento hasta −12 °C', 'Silicona médica segura y cómoda', 'Ángulo de pantalla ajustable', 'Filtro de algodón médico que retiene impurezas'],
@@ -165,7 +165,7 @@ window.EQUIPOS = {
     aplicadores: 'Cinco cabezales intercambiables (de 76×36×27 a 204×73×81 mm) con pantalla de 3,5" que muestra temperatura, vacío y tiempo.',
   },
   aircool: {
-    no: 'No. 13', name: 'Skin Air Cooling', cat: 'confort', img: 'img/eq-aircool.webp',
+    no: 'No. 13', name: 'Skin Air Cooling', cat: 'confort', img: 'img/eq-aircool.webp?v=3',
     tech: 'Aire frío · −30 °C', techLong: 'Enfriador de piel por aire frío',
     desc: 'Enfriador de piel por aire frío para acompañar los tratamientos láser: más confort para la clienta durante la sesión.',
     ventajas: ['Compresores importados de Alemania', 'Refrigeración a muy baja temperatura, hasta −30 °C', 'Sistema independiente de reducción de ruido', 'Soplador de alta velocidad'],
