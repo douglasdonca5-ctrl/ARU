@@ -61,6 +61,7 @@ if ($canal !== 'whatsapp' && campo('privacidad', 5) === '') {
 }
 
 $datos = [
+    'id' => bin2hex(random_bytes(8)),
     'fecha' => date('c'),
     'tipo' => $tipo,
     'email' => $email,
