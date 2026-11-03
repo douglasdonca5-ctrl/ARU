@@ -10,8 +10,8 @@
 declare(strict_types=1);
 
 // Email que recibe los avisos. Vacío = solo se guardan en el servidor.
-const DESTINO = '';
-const REMITENTE = 'no-responder@aruesthetics.es';
+const DESTINO = 'comercial@aruesthetics.es';
+const REMITENTE = 'comercial@aruesthetics.es';
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
@@ -39,9 +39,14 @@ if (campo('web') !== '') {
     responder(true);
 }
 
-$tipo = campo('tipo', 20) === 'newsletter' ? 'newsletter' : 'demostracion';
+// demostracion: formulario de contacto · newsletter: pie · llamada: asistente («Prefiero que me llaméis»)
+$tipo = campo('tipo', 20);
+if (!in_array($tipo, ['newsletter', 'demostracion', 'llamada'], true)) {
+    $tipo = 'demostracion';
+}
 $email = campo('email', 160);
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+// En la llamada el email es opcional: lo que hace falta es el teléfono
+if (($tipo !== 'llamada' || $email !== '') && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     responder(false, 'Introduce un email válido.', 422);
 }
 if (campo('privacidad', 5) === '') {
@@ -53,6 +58,24 @@ $datos = [
     'tipo' => $tipo,
     'email' => $email,
 ];
+if ($tipo === 'llamada') {
+    $datos += [
+        'nombre' => campo('nombre', 120),
+        'telefono' => campo('telefono', 40),
+        'motivo' => campo('motivo', 40),
+        'centro' => campo('centro', 160),
+        'provincia' => campo('provincia', 80),
+        'equipo' => campo('equipo', 80),
+        'mensaje' => campo('mensaje', 3000),
+    ];
+    $digitos = preg_replace('/\D/', '', $datos['telefono']) ?? '';
+    if ($datos['nombre'] === '') {
+        responder(false, 'Indica tu nombre.', 422);
+    }
+    if (strlen($digitos) < 9 || strlen($digitos) > 15) {
+        responder(false, 'Revisa el teléfono: debe tener al menos 9 cifras.', 422);
+    }
+}
 if ($tipo === 'demostracion') {
     $datos += [
         'nombre' => campo('nombre', 120),
@@ -95,16 +118,19 @@ if (@file_put_contents($dir . '/' . $tipo . '.jsonl', $linea, FILE_APPEND | LOCK
 }
 
 if (DESTINO !== '') {
-    $asunto = $tipo === 'newsletter' ? 'Aruesthetics · nueva suscripción' : 'Aruesthetics · solicitud de demostración';
+    $asunto = [
+        'newsletter' => 'Aruesthetics · nueva suscripción',
+        'llamada' => 'Aruesthetics · quieren que les llaméis',
+        'demostracion' => 'Aruesthetics · solicitud de demostración',
+    ][$tipo];
     $cuerpo = '';
     foreach ($datos as $k => $v) {
         $cuerpo .= ucfirst($k) . ': ' . $v . "\n";
     }
-    $cabeceras = [
-        'From: Aruesthetics <' . REMITENTE . '>',
-        'Reply-To: ' . $email,
-        'Content-Type: text/plain; charset=utf-8',
-    ];
+    $cabeceras = ['From: Aruesthetics <' . REMITENTE . '>', 'Content-Type: text/plain; charset=utf-8'];
+    if ($email !== '') {
+        $cabeceras[] = 'Reply-To: ' . $email;
+    }
     @mail(DESTINO, '=?UTF-8?B?' . base64_encode($asunto) . '?=', $cuerpo, implode("\r\n", $cabeceras));
 }
 

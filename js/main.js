@@ -64,9 +64,9 @@
 
   /* ---------- Ficha de producto ---------- */
   const sheet = $('#product-sheet');
-  let current = null;
+  let current = null, currentId = null;
   const openProduct = (id) => {
-    const p = PRODUCTS[id]; current = p;
+    const p = PRODUCTS[id]; current = p; currentId = id;
     $('#ps-img').src = p.img; $('#ps-img').alt = p.name;
     $('#ps-no').textContent = p.no;
     $('#ps-name').textContent = p.name;
@@ -95,6 +95,8 @@
   });
   $('#ps-demo').addEventListener('click', () => goContact(current.name));
   $('#ps-ficha').addEventListener('click', () => goContact(current.name, `Me gustaría recibir la ficha técnica del ${current.name}.`));
+  // WhatsApp: abre el asistente (js/chat.js) con el equipo ya elegido
+  $('#ps-wa')?.addEventListener('click', () => window.aruChat?.open({ equipo: currentId }));
 
   /* ---------- Menú móvil ---------- */
   const burger = $('.nav__burger'), menu = $('#menu'), nav = $('#nav');
@@ -346,7 +348,7 @@
   const quiz = $('#quiz');
   const qSteps = $$('.quiz__step', quiz), qBar = $('.quiz__bar span', quiz);
   const back = $('#quiz-back'), restart = $('#quiz-restart');
-  let ans = {}, at = 0, rec = null;
+  let ans = {}, at = 0, rec = null, recId = null;
 
   const WHY = {
     hidl: 'Tres longitudes de onda (755, 808 y 1064 nm) en un mismo diodo: atiendes todos los fototipos y zonas sin cambiar de equipo, con análisis del vello incluido.',
@@ -385,7 +387,7 @@
     setTimeout(() => {
       if (at < 2) return show(at + 1);
       show(3);
-      const [main, alt] = recommend(ans); rec = PRODUCTS[main];
+      const [main, alt] = recommend(ans); rec = PRODUCTS[main]; recId = main;
       $('#qr-img').src = rec.img; $('#qr-img').alt = rec.name;
       $('#qr-name').textContent = rec.name;
       $('#qr-tech').textContent = rec.techLong || rec.tech;
@@ -398,6 +400,7 @@
   back.addEventListener('click', () => show(Math.max(0, at - 1)));
   restart.addEventListener('click', resetQuiz);
   $('#qr-demo').addEventListener('click', () => goContact(rec.name));
+  $('#qr-wa')?.addEventListener('click', () => window.aruChat?.open({ equipo: recId }));
 
   /* ---------- Formularios ---------- */
   const send = async (form, status, okMsg) => {

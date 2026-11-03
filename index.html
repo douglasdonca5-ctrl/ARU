@@ -17,9 +17,10 @@
   <link rel="preload" as="font" type="font/woff2" href="fonts/marcellus.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="fonts/hanken.woff2" crossorigin>
   <link rel="preload" as="image" href="img/hero.webp">
-  <link rel="stylesheet" href="css/styles.css?v=9">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="css/styles.css?v=11">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Organization","name":"Aruesthetics","url":"https://aruesthetics.es/","description":"Aparatología estética profesional para centros estéticos y clínicas.","logo":"https://aruesthetics.es/img/favicon.svg"}
+  {"@context":"https://schema.org","@type":"Organization","name":"Aruesthetics","url":"https://aruesthetics.es/","description":"Aparatología estética profesional para centros estéticos y clínicas.","logo":"https://aruesthetics.es/img/favicon.svg","email":"comercial@aruesthetics.es","contactPoint":{"@type":"ContactPoint","telephone":"+34 605 927 468","email":"comercial@aruesthetics.es","contactType":"sales","areaServed":"ES","availableLanguage":"es"}}
   </script>
 </head>
 <body>
@@ -253,6 +254,7 @@
       <div class="contact__intro">
         <h2 class="display display--ink">Pide una<br>demostración</h2>
         <p>Cuéntanos qué centro tienes y qué tratamientos quieres ofrecer. Te contactamos para organizar una demostración del equipo en tu cabina.</p>
+        <p class="contact__alt">¿Prefieres WhatsApp? <a href="https://wa.me/34605927468?text=Hola%2C%20Aruesthetics.%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n." target="_blank" rel="noopener" data-open-chat>Escríbenos al +34 605 927 468</a> o a <a href="mailto:comercial@aruesthetics.es">comercial@aruesthetics.es</a>.</p>
       </div>
       <form class="form" id="form-contacto" action="enviar.php" method="post" novalidate>
         <input type="hidden" name="tipo" value="demostracion">
@@ -312,6 +314,8 @@
           <li><button type="button" class="linklike" data-open-quiz>Encuentra tu equipo</button></li>
           <li><a href="#formacion">Formación y servicio</a></li>
           <li><a href="#contacto">Contacto</a></li>
+          <li><a href="https://wa.me/34605927468?text=Hola%2C%20Aruesthetics.%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n." target="_blank" rel="noopener" data-open-chat>WhatsApp +34 605 927 468</a></li>
+          <li><a href="mailto:comercial@aruesthetics.es">comercial@aruesthetics.es</a></li>
         </ul>
       </div>
     </div>
@@ -343,6 +347,7 @@
         <div class="sheet__actions">
           <button class="btn btn--ink" type="button" id="ps-demo">Pedir demostración</button>
           <button class="btn" type="button" id="ps-ficha">Solicitar ficha técnica</button>
+          <button class="btn btn--wa" type="button" id="ps-wa"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>Consultar por WhatsApp</span></button>
         </div>
         <p class="sheet__note">Ficha técnica completa y configuración bajo solicitud.</p>
       </div>
@@ -396,6 +401,7 @@
             <div class="sheet__actions">
               <button class="btn btn--ink" type="button" id="qr-demo">Pedir demostración</button>
               <button class="btn" type="button" id="qr-more">Ver ficha</button>
+              <button class="btn btn--wa" type="button" id="qr-wa"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>Consultar por WhatsApp</span></button>
             </div>
           </div>
         </div>
@@ -415,11 +421,18 @@
       <p>Los datos que nos envías a través de los formularios de esta web se tratan con el único fin de responder a tu solicitud, organizar demostraciones y, si te suscribes, enviarte novedades de Aruesthetics.</p>
       <p>La base legal es tu consentimiento, que puedes retirar en cualquier momento. Conservamos los datos mientras sean necesarios para atender tu solicitud o hasta que pidas su supresión. No los cedemos a terceros salvo obligación legal.</p>
       <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiéndonos a través del formulario de contacto, y presentar una reclamación ante la Agencia Española de Protección de Datos (aepd.es).</p>
+      <p>Si nos escribes por WhatsApp, la conversación pasa también por WhatsApp (Meta), que trata esos datos según sus propias condiciones. El asistente de esta web solo prepara el mensaje: no guarda nada salvo que pidas que te llamemos.</p>
       <p>Esta web no utiliza cookies de análisis ni de publicidad.</p>
     </div>
   </dialog>
 
+  <!-- ============ WHATSAPP / ASISTENTE ============ -->
+  <aside class="wa" aria-label="Contacto por WhatsApp">
+  <a class="wa-fab" href="https://wa.me/34605927468?text=Hola%2C%20Aruesthetics.%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n." target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp: presupuesto o demostración"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+  </aside>
+
   <script src="js/equipos.js?v=4" defer></script>
-  <script src="js/main.js?v=7" defer></script>
+  <script src="js/chat.js?v=2" defer></script>
+  <script src="js/main.js?v=8" defer></script>
 </body>
 </html>
