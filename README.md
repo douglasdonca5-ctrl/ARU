@@ -3,7 +3,8 @@
 Web estática de Aruesthetics (maquinaria láser para centros estéticos). Español de España, sin precios.
 
 - `site/` — lo que se publica: `index.html`, `css/`, `js/`, `img/`, `video/`, `frames/`, `fonts/`, `enviar.php`.
-- Imágenes y vídeos generados con Higgsfield (GPT Image 2.5 y Kling 3.0); los originales quedan en `src/` (no versionados).
+- **Equipos**: los 13 del catálogo del fabricante «2025 new product catalog» (SANHE). Datos en `site/js/equipos.js` (solo lo que figura en el catálogo, sin promesas de resultados ni certificados). Fotos: recortes originales del PDF compuestos sobre el fondo de estudio (`src/catalogo/`, no versionado), en `site/img/eq-*.webp`. Son de baja resolución (~280×540 px): conviene pedir al fabricante las fotos en alta.
+- Imágenes de ambiente y vídeos generados con Higgsfield (GPT Image 2.5 y Kling 3.0); los originales quedan en `src/` (no versionados).
 - **Vídeo scroll** (`#tratamiento`): secuencia de 151 fotogramas en `site/frames/d` (escritorio, 1600 px) y `site/frames/m` (móvil, recorte 3:4) dibujada en un canvas según el scroll. `data-frames` en el `<section>` debe coincidir con el número de fotogramas.
 - **Formularios**: `enviar.php` guarda los envíos en `../aruesthetics-datos/*.jsonl` (fuera de `public_html`). Para recibir avisos por email, rellenar `DESTINO` en `enviar.php`.
 - **Publicación**: dominio definitivo **https://aruesthetics.es** (Hostinger, cuenta u861290346). Se sube con la API de Hostinger: zip del *contenido* de `site/` → «deploy static website» (sustituye `public_html`). El FTP de la cuenta usa un certificado `*.hstgr.io` que no coincide con la IP, así que no se usa.

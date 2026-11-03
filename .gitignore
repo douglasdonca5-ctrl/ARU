@@ -5,3 +5,4 @@ src/prev/
 .DS_Store
 src/raw2/
 .env*
+src/catalogo/

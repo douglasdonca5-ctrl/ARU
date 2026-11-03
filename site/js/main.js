@@ -12,58 +12,35 @@
   const techs = $('.techs__list');
   if (techs) [...techs.children].forEach((li) => { const c = li.cloneNode(true); c.classList.add('dup'); c.setAttribute('aria-hidden', 'true'); techs.append(c); });
 
-  /* ---------- Catálogo ---------- */
-  const PRODUCTS = {
-    trio: {
-      no: 'No. 01', name: 'Aru Trio', tech: 'Diodo · 755 / 808 / 1064 nm', img: 'img/p01.webp?v=2',
-      desc: 'Plataforma de diodo con tres longitudes de onda combinadas en un mismo disparo. Pensada para cabinas de depilación con mucha agenda: un solo equipo para trabajar todos los fototipos y todas las zonas.',
-      specs: ['Tres longitudes de onda combinadas: 755, 808 y 1064 nm', 'Pieza de mano con ventana de zafiro refrigerada', 'Pantalla táctil con protocolos por fototipo y zona', 'Formato torre con ruedas ocultas'],
-    },
-    compact: {
-      no: 'No. 02', name: 'Aru Compact', tech: 'Diodo · 808 nm', img: 'img/p02.webp?v=2', tag: 'Nuevo',
-      desc: 'Diodo de sobremesa para centros que empiezan con el láser o necesitan una segunda cabina. Todo el protocolo de depilación en un formato que cabe en cualquier espacio.',
-      specs: ['Formato sobremesa, fácil de mover entre cabinas', 'Pieza de mano con punta de zafiro', 'Interfaz táctil frontal con modos guiados', 'Ideal como primer equipo o cabina de apoyo'],
-    },
-    alex: {
-      no: 'No. 03', name: 'Aru Alex 755', tech: 'Alejandrita · 755 nm', img: 'img/p03.webp?v=2',
-      desc: 'Láser de alejandrita para vello fino y claro en fototipos bajos, con pieza de mano de spot redondo y refrigeración integrada.',
-      specs: ['Longitud de onda de 755 nm', 'Pieza de mano de spot redondo', 'Refrigeración integrada en la pieza de mano', 'Mueble con ruedas y soporte lateral'],
-    },
-    ipl: {
-      no: 'No. 04', name: 'Aru IPL·SHR', tech: 'Luz pulsada · SHR', img: 'img/p04.webp?v=2',
-      desc: 'Luz pulsada intensa con modo SHR de barrido para depilación progresiva y fotorrejuvenecimiento. Dos piezas de mano en el mismo equipo.',
-      specs: ['Dos piezas de mano con cristal guía de luz', 'Modo SHR de barrido', 'Filtros para depilación y fotorrejuvenecimiento', 'Consola sobre pedestal'],
-    },
-    pico: {
-      no: 'No. 05', name: 'Aru Pico', tech: 'Picosegundo', img: 'img/p05.webp?v=2',
-      desc: 'Láser de picosegundos para eliminación de tatuajes y pigmento. Brazo articulado de siete articulaciones para llegar a cualquier zona sin forzar la postura.',
-      specs: ['Pulsos en el rango de los picosegundos', 'Brazo articulado de siete articulaciones', 'Indicado para tatuajes multicolor y lesiones pigmentadas', 'Pantalla táctil con parámetros guardables'],
-    },
-    qs: {
-      no: 'No. 06', name: 'Aru Q-Switch', tech: 'Nd:YAG · 1064 / 532 nm', img: 'img/p06.webp?v=2',
-      desc: 'Nd:YAG Q-Switched para tatuajes, manchas y carbon peel. Pieza de mano con zoom para ajustar el spot sin cambiar de cabezal.',
-      specs: ['Longitudes de onda de 1064 y 532 nm', 'Pieza de mano con zoom de spot', 'Protocolos de carbon peel', 'Mueble compacto con ruedas'],
-    },
-    co2: {
-      no: 'No. 07', name: 'Aru CO₂ Fraccional', tech: 'CO₂ · 10.600 nm', img: 'img/p07.webp?v=2',
-      desc: 'CO₂ fraccionado con escáner para resurfacing, textura y cicatrices. Brazo de espejos articulado y patrones de escaneo configurables.',
-      specs: ['Longitud de onda de 10.600 nm', 'Escáner con patrones configurables', 'Brazo articulado de espejos', 'Indicado para textura, poros y cicatrices'],
-    },
-    vascular: {
-      no: 'No. 08', name: 'Aru Vascular 980', tech: 'Diodo · 980 nm', img: 'img/p08.webp?v=2', tag: 'Nuevo',
-      desc: 'Diodo de 980 nm de sobremesa para arañas vasculares y lesiones vasculares finas. Pieza de mano tipo lápiz con fibra para trabajar con precisión.',
-      specs: ['Longitud de onda de 980 nm', 'Pieza de mano tipo lápiz con fibra', 'Formato sobremesa', 'Indicado para arañas vasculares y puntos rubí'],
-    },
-  };
+  /* ---------- Catálogo (datos en equipos.js) ---------- */
+  const PRODUCTS = window.EQUIPOS || {};
+  const CATS = window.CATEGORIAS || {};
 
   const card = (id) => {
     const p = PRODUCTS[id];
     return `<button type="button" class="pcard reveal" data-product="${id}" aria-label="${p.name}, ver ficha">
-      <span class="pcard__img"><img src="${p.img}" alt="${p.name}, equipo láser profesional" loading="lazy" width="1000" height="1250"></span>
+      <span class="pcard__img"><img src="${p.img}" alt="${p.name}, equipo de estética profesional" loading="lazy" width="1000" height="1250"></span>
       <span class="pcard__meta"><span>${p.no} ${p.name}${p.tag ? `<em class="pcard__tag">${p.tag}</em>` : ''}</span><span>${p.tech}</span></span>
     </button>`;
   };
   $$('[data-products]').forEach((el) => { el.innerHTML = el.dataset.products.split(',').map(card).join(''); });
+
+  // Catálogo completo con filtros por familia
+  const grid = $('#catalogo-grid'), filters = $('.filters');
+  if (grid) {
+    const ids = Object.keys(PRODUCTS);
+    grid.innerHTML = ids.map((id) => card(id).replace('class="pcard reveal"', `class="pcard reveal" data-cat="${PRODUCTS[id].cat}"`)).join('');
+    const chip = (key, label, n) => `<button type="button" class="chip" data-filter="${key}" aria-pressed="false">${label} <span>${n}</span></button>`;
+    filters.innerHTML = chip('todos', 'Todos', ids.length)
+      + Object.entries(CATS).map(([k, label]) => chip(k, label, ids.filter((id) => PRODUCTS[id].cat === k).length)).join('');
+    const setFilter = (key) => {
+      $$('.chip', filters).forEach((c) => { const on = c.dataset.filter === key; c.classList.toggle('is-on', on); c.setAttribute('aria-pressed', String(on)); });
+      $$('.pcard', grid).forEach((c) => { c.hidden = key !== 'todos' && c.dataset.cat !== key; if (!c.hidden) c.classList.add('is-in'); });
+    };
+    setFilter('todos');
+    // chips del catálogo y enlaces del resto de la página (pie, destacados)
+    document.addEventListener('click', (e) => { const f = e.target.closest('[data-filter]'); if (f) setFilter(f.dataset.filter); });
+  }
 
   const select = $('#equipo-select');
   Object.values(PRODUCTS).forEach((p) => select.insertAdjacentHTML('beforeend', `<option>${p.name}</option>`));
@@ -93,14 +70,28 @@
     $('#ps-img').src = p.img; $('#ps-img').alt = p.name;
     $('#ps-no').textContent = p.no;
     $('#ps-name').textContent = p.name;
-    $('#ps-tech').textContent = p.tech;
+    $('#ps-tech').textContent = p.techLong || p.tech;
     $('#ps-desc').textContent = p.desc;
-    $('#ps-specs').innerHTML = p.specs.map((s) => `<li>${s}</li>`).join('');
+    $('#ps-specs').innerHTML = p.ventajas.map((v) => `<li>${v}</li>`).join('');
+    $('#ps-ficha-t').innerHTML = p.ficha.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('');
+    $('#ps-apl').innerHTML = p.aplicadores ? `<strong>Aplicadores:</strong> ${p.aplicadores}` : '';
+    const thumbs = $('#ps-thumbs');
+    thumbs.hidden = !p.extra;
+    if (p.extra) {
+      const fotos = [{ img: p.img, label: p.name }, p.extra];
+      thumbs.innerHTML = fotos.map((f, k) => `<button type="button" aria-pressed="${k === 0}" data-src="${f.img}" data-label="${f.label}"><img src="${f.img}" alt="${f.label}"></button>`).join('');
+    }
+    $('.sheet__info', sheet).scrollTop = 0;
     openDialog(sheet);
   };
   document.addEventListener('click', (e) => {
     const c = e.target.closest('[data-product]');
     if (c) openProduct(c.dataset.product);
+  });
+  $('#ps-thumbs').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    $('#ps-img').src = b.dataset.src; $('#ps-img').alt = b.dataset.label;
+    $$('#ps-thumbs button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
   });
   $('#ps-demo').addEventListener('click', () => goContact(current.name));
   $('#ps-ficha').addEventListener('click', () => goContact(current.name, `Me gustaría recibir la ficha técnica del ${current.name}.`));
@@ -358,20 +349,25 @@
   let ans = {}, at = 0, rec = null;
 
   const WHY = {
-    trio: 'Tres longitudes de onda en un mismo equipo: atiendes todos los fototipos y zonas sin cambiar de máquina, ideal para una agenda llena.',
-    compact: 'Formato de sobremesa que se mueve contigo: depilación láser completa en cualquier cabina, sin ocupar espacio fijo.',
-    ipl: 'Luz pulsada con dos piezas de mano: depilación y fotorrejuvenecimiento en el mismo equipo, perfecto para sumar servicios.',
-    pico: 'Pulsos de picosegundos para tatuajes y pigmento con el nivel de control que pide una consulta médica.',
-    qs: 'Q-Switch versátil para manchas, tatuajes y carbon peel: el tratamiento de pigmento más fácil de incorporar en un centro estético.',
-    co2: 'CO₂ fraccionado para textura, poros y cicatrices, con escáner configurable para cada indicación.',
-    vascular: 'Diodo de 980 nm de sobremesa, preciso y compacto, para arañas vasculares y lesiones vasculares finas.',
+    hidl: 'Tres longitudes de onda (755, 808 y 1064 nm) en un mismo diodo: atiendes todos los fototipos y zonas sin cambiar de equipo, con análisis del vello incluido.',
+    dpl: 'Depilación DPL y, con sus nueve filtros, tratamientos de cuidado de la piel en el mismo equipo: ideal para sumar servicios.',
+    pico500: 'Picosegundos de 500 ps con brazo coreano de 7 articulaciones, para tatuajes, melasma y carbon peel con el control que pide una consulta médica.',
+    pico3: 'Tres modos Nd:YAG en uno: picosegundo para tatuajes y pigmento, pulso largo para depilación y vascular, y Genesis para rejuvenecer.',
+    co2: 'CO₂ fraccional de 40 W con modos continuo, fraccional y ultra para resurfacing, y cabezales para ginecología.',
+    erbio: 'Erbio de 2940 nm para resurfacing ligero o completo y lesiones pigmentadas benignas.',
+    tulio: 'Tulio de 1927 nm, ablativo y no ablativo, para tono, melasma, poros y textura, sin consumibles en la fibra.',
+    pinxel: 'Microagujas con radiofrecuencia monopolar y bipolar, de 0,4 a 4 mm, con vacío automático.',
+    patrixr: 'Radiofrecuencia multidimensional: varias profundidades y energías en una sola pasada, con control de impedancia.',
+    magshape: 'HI-EMT con radiofrecuencia para músculo y grasa en la misma sesión, con silla opcional para suelo pélvico.',
+    cryo: 'Criolipólisis de 360° con cinco aplicadores para trabajar varias zonas con un solo equipo.',
+    megashape: 'Vacío, radiofrecuencia, cavitación y 940 nm en una sola plataforma corporal.',
   };
   const recommend = ({ trat, centro, uso }) => {
     const medical = centro === 'clinica' || centro === 'derma';
-    if (trat === 'depilacion') return uso === 'movil' || centro === 'spa' ? ['compact', 'trio'] : uso === 'varias' ? ['trio', 'compact'] : ['trio', 'alex'];
-    if (trat === 'pigmento') return medical ? ['pico', 'qs'] : ['qs', 'pico'];
-    if (trat === 'rejuv') return medical ? ['co2', 'ipl'] : ['ipl', 'co2'];
-    return ['vascular', medical ? 'qs' : 'ipl'];
+    if (trat === 'depilacion') return centro === 'spa' ? ['dpl', 'hidl'] : ['hidl', 'dpl'];
+    if (trat === 'pigmento') return medical ? ['pico500', 'pico3'] : ['pico3', 'pico500'];
+    if (trat === 'rejuv') return centro === 'clinica' ? ['co2', 'erbio'] : centro === 'derma' ? ['erbio', 'tulio'] : centro === 'spa' ? ['pinxel', 'patrixr'] : ['tulio', 'patrixr'];
+    return uso === 'volumen' ? ['magshape', 'cryo'] : uso === 'varias' ? ['cryo', 'megashape'] : ['megashape', 'cryo'];
   };
   const show = (n) => {
     at = n;
@@ -392,7 +388,7 @@
       const [main, alt] = recommend(ans); rec = PRODUCTS[main];
       $('#qr-img').src = rec.img; $('#qr-img').alt = rec.name;
       $('#qr-name').textContent = rec.name;
-      $('#qr-tech').textContent = rec.tech;
+      $('#qr-tech').textContent = rec.techLong || rec.tech;
       $('#qr-why').textContent = WHY[main];
       $('#qr-alt').textContent = `También encaja contigo: ${PRODUCTS[alt].name}.`;
       $('#qr-more').onclick = () => { closeDialog(quiz); setTimeout(() => openProduct(main), 50); };
