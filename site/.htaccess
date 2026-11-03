@@ -1,10 +1,8 @@
 Options -Indexes
 DirectoryIndex index.html
 
-# HTTPS siempre
-RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# HTTPS: lo fuerza la Hostinger (ajuste «Force HTTPS» del sitio) cuando el certificado
+# está activo; forzarlo aquí antes de tener certificado deja la web inaccesible.
 
 # Tipos
 AddType image/webp .webp
@@ -33,6 +31,4 @@ AddType video/mp4 .mp4
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-  # Dominio temporal: fuera de los buscadores
-  Header always set X-Robots-Tag "noindex, nofollow"
 </IfModule>

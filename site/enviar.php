@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 // Email que recibe los avisos. Vacío = solo se guardan en el servidor.
 const DESTINO = '';
-const REMITENTE = 'no-responder@cornflowerblue-goose-885481.hostingersite.com';
+const REMITENTE = 'no-responder@aruesthetics.es';
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');

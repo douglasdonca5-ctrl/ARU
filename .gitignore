@@ -4,3 +4,4 @@ src/prev/
 *.zip
 .DS_Store
 src/raw2/
+.env*
